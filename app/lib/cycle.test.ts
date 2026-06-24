@@ -87,15 +87,16 @@ describe('getDayInfo', () => {
     const info = getDayInfo(13)
     expect(info.personalMetrics).toBeUndefined()
     expect(info.displayMetrics).toEqual(info.referenceMetrics)
-    expect(info.displayMetrics.energie).toBe(95) // j13 référence
   })
 
   it('avec saisie partielle, fusionne sans écraser les métriques non saisies', () => {
+    // Valeurs de référence lues dynamiquement : les données évoluent via ingest-source.
+    const ref13 = findReferenceEntry(13)
     const info = getDayInfo(13, { energie: 40 })
     expect(info.personalMetrics).toEqual({ energie: 40 })
-    expect(info.displayMetrics.energie).toBe(40) // écrasé
-    expect(info.displayMetrics.humeur).toBe(95) // référence préservée
-    expect(info.referenceMetrics.energie).toBe(95) // référence intacte
+    expect(info.displayMetrics.energie).toBe(40) // saisie : écrase la référence
+    expect(info.displayMetrics.humeur).toBe(ref13.metrics.humeur) // non saisie : référence préservée
+    expect(info.referenceMetrics.energie).toBe(ref13.metrics.energie) // référence intacte
   })
 
   it('un objet de saisie vide est traité comme aucune saisie', () => {
