@@ -30,7 +30,7 @@ Les deux couches sont indépendantes. Ne pas mélanger les responsabilités.
 type CycleEntry = {
   id: string
   j1: Date              // début des règles — obligatoire, déclenche le recalcul
-  rulesEndDate: Date    // fin des règles — marqué manuellement, affine la durée moyenne
+  rulesEndDate?: Date   // fin des règles — optionnelle jusqu'au marquage manuel (D_003)
   cycleEndDate?: Date   // rempli automatiquement au j1 suivant
 }
 ```
