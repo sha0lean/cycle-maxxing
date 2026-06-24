@@ -67,7 +67,7 @@ export type PhaseReferenceEntry = {
 export type CycleEntry = {
   id: string
   j1: Date // début des règles — obligatoire, déclenche le recalcul
-  rulesEndDate: Date // fin des règles — marquée manuellement, affine la durée moyenne
+  rulesEndDate?: Date // fin des règles — marquée plus tard (D_003), absente tant que non confirmée
   cycleEndDate?: Date // rempli automatiquement au j1 du cycle suivant
 }
 
