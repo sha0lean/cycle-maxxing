@@ -18,8 +18,6 @@ energie:25  humeur:32  libido:6   fatigue:90  sensibilite:68  stress:44  douleur
 - keywords: fatigue profonde · crampes · introspection · besoin de chaleur
 - social: faible
 - résumé: Corps en récupération. Crampes j1-j2 possibles. Elle a besoin de ralentir totalement.
-- faire: bouillotte · thé chaud · chocolat chaud · films/série
-- éviter: plans sportifs
 
 ### j3-j4 — Fin
 ```
@@ -41,7 +39,6 @@ energie:65  humeur:67  libido:45  fatigue:28  sensibilite:27  stress:20  douleur
 - keywords: énergie qui revient · optimisme naissant · envie de bouger
 - social: moyen
 - résumé: La remontée commence. L'élan revient sans être encore à fond.
-- faire: proposer sortie légère
 
 ### j8-j9 — Milieu
 ```
@@ -51,7 +48,6 @@ energie:80  humeur:80  libido:58  fatigue:15  sensibilite:23  stress:14  douleur
 - keywords: énergie croissante · curiosité · sociable · envie de projets
 - social: élevé
 - résumé: Elle est réceptive, aventurière. Bonne période pour planifier ensemble.
-- faire: activités nouvelles
 
 ### j10-j11 — Fin
 ```
@@ -80,9 +76,8 @@ energie:95  humeur:95  libido:92  fatigue:8   sensibilite:25  stress:10  douleur
 - keywords: peak de confiance · charisme max · très sociable · séductrice · éloquente · envie de plaire
 - social: très élevé
 - résumé: Sommet absolu du cycle. Énergie, confiance, attractivité au maximum. Le meilleur moment du mois.
-- faire: grands plans · resto spécial · connexion physique max
+- faire: connexion physique max
 - noter: elle est objectivement plus attirante pour les autres aussi — biologique, pas une raison de jalousie
-- conseil: Peak du cycle. Tout ce que vous voulez faire ensemble, c'est maintenant.
 
 ### j14 — Post-pic
 ```
@@ -103,8 +98,7 @@ energie:60  humeur:60  libido:39  fatigue:47  sensibilite:55  stress:39  douleur
 - keywords: redescente progressive · besoin de nid · plus casanière · appétit augmente
 - social: moyen
 - résumé: Elle redescend. L'énergie baisse sans s'effondrer. Besoin de confort et d'intimité.
-- faire: soirée calme · comfort food · cuisine ensemble · câlins · série
-- éviter: plans sociaux chargés
+- faire: câlins
 
 ### j18-j20 — Fin
 ```
@@ -134,4 +128,4 @@ energie:10  humeur:13  libido:7   fatigue:98  sensibilite:98  stress:86  douleur
 - urgence: critique
 - keywords: hypersensibilité maximale · pleurs sans raison · seins très sensibles · gonflement · maux de tête · envies intenses · sommeil perturbé
 - résumé: Phase la plus intense. Chute hormonale brutale. Tout est amplifié. Soutien sans correction.
-- faire: câlins si demandés · ibuprofène accessible
+- faire: câlins si demandés

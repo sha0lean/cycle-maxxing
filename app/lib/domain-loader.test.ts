@@ -41,4 +41,21 @@ describe('resolveDomains', () => {
       expect(resolved.entry?.range).toBe(first.range)
     }
   })
+
+  it('un trou interne de couverture ne renvoie pas de conseil (null)', () => {
+    // Cherche un jour non couvert strictement entre la 1re et la dernière plage d'un domaine.
+    for (const domain of DOMAINS) {
+      const sorted = [...domain.entries].sort((a, b) => a.dayStart - b.dayStart)
+      const min = sorted[0].dayStart
+      const max = sorted[sorted.length - 1].dayEnd
+      for (let day = min; day <= max; day++) {
+        const covered = domain.entries.some((e) => day >= e.dayStart && day <= e.dayEnd)
+        if (!covered) {
+          const resolved = resolveDomains(day).find((r) => r.id === domain.id)!
+          expect(resolved.entry).toBeNull()
+          return // un cas suffit à valider le comportement
+        }
+      }
+    }
+  })
 })

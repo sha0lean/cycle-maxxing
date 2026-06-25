@@ -12,8 +12,9 @@ export type ResolvedDomain = {
 }
 
 // Plage la plus spécifique couvrant ce jour (la plus courte l'emporte : jour précis > sous-phase > phase).
-// Hors couverture, on clampe comme la couche quantitative : avant la première plage → première,
+// Hors couverture, on ne clampe qu'aux bords : avant la première plage → première,
 // au-delà de la dernière → dernière (Julie peut dépasser j27 jusqu'aux prochaines règles).
+// Un trou interne (domaine à couverture partielle) → null : pas de conseil pour ce jour.
 function resolveEntry(domain: Domain, dayNumber: number): DomainEntry | null {
   if (domain.entries.length === 0) return null
 
@@ -27,7 +28,9 @@ function resolveEntry(domain: Domain, dayNumber: number): DomainEntry | null {
   const sorted = [...domain.entries].sort((a, b) => a.dayStart - b.dayStart)
   const first = sorted[0]
   const last = sorted[sorted.length - 1]
-  return dayNumber < first.dayStart ? first : last
+  if (dayNumber < first.dayStart) return first
+  if (dayNumber > last.dayEnd) return last
+  return null
 }
 
 // Tous les domaines résolus pour un j(N) donné, dans l'ordre des fichiers.
