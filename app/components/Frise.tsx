@@ -4,9 +4,7 @@
 // du dessus (stats + conseils, via Dashboard) reflètent ce jour en live.
 
 import { useState } from 'react'
-import { getDayInfo, averageDayLogs } from '@/lib/cycle'
-import { resolveDomains } from '@/lib/domain-loader'
-import { Dashboard } from '@/components/Dashboard'
+import { DayPanel } from '@/components/DayPanel'
 import { Timeline } from '@/components/Timeline'
 import type { DayLog, Metrics } from '@/lib/types'
 
@@ -22,17 +20,14 @@ export function Frise({ logs, todayDay, onSaveMetrics }: FriseProps) {
 
   // Le survol prime sur la sélection pour l'affichage ; l'édition cible le jour fixé.
   const effectiveDay = hoverDay ?? selectedDay
-  const personal = averageDayLogs(logs, effectiveDay)
-  const info = getDayInfo(effectiveDay, personal)
-  const domains = resolveDomains(effectiveDay)
 
   return (
     <div className="space-y-6">
-      <Dashboard
-        info={info}
-        hasPersonal={!!personal}
-        domains={domains}
-        onSaveMetrics={(partial) => onSaveMetrics(selectedDay, partial)}
+      <DayPanel
+        displayDay={effectiveDay}
+        editDay={selectedDay}
+        logs={logs}
+        onSaveMetrics={onSaveMetrics}
       />
       <Timeline
         cursorDay={effectiveDay}
