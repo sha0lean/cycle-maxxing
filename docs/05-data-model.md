@@ -155,6 +155,56 @@ Le loader résout les chevauchements en prenant la règle la plus spécifique (p
 
 ---
 
+## Provenance des capteurs — couche preuves
+
+> Comment un article scientifique devient une valeur de capteur, et comment cette filiation
+> reste traçable. Décision actée : [D_007](07-decisions-log.md#d_007).
+
+### Flux d'ingestion
+
+```
+  ARTICLE (URL / PDF / texte collé)
+       │
+       ▼
+  /ingest-source  ──lit──►  CONTEXT.md (termes) + skill SKILL.md (seuils, table niveau→poids)
+       │  extrait les claims · assigne niveau de preuve + poids · résout les conflits de portée
+       │
+   ┌───┴───────────────────┬──────────────────────────┐
+   ▼                       ▼                          ▼
+ data/sources/          data/signal-mapping.md     data/pending-claims.md
+ <source-id>.md         recette signal→capteurs    claims capés / refusés,
+ 1 FICHIER / ARTICLE    + source_initiale          réactivables si corroborés
+   │                    (dictionnaire partagé)     (journal des décisions)
+   │
+   │ deltas appliqués (avant→après) consignés DANS chaque fichier source
+   ▼
+ data/phase-reference.md   valeurs COURANTES des 8 capteurs (état final, pas l'historique)
+   │  codegen — scripts/gen-data.mts (D_006)
+   ▼
+ app/lib/generated/phase-reference.ts  →  jauges & courbes de l'app
+```
+
+### Les fichiers
+
+| Fichier | Rôle | Clé |
+|---|---|---|
+| `data/sources/<id>.md` | **Archive : 1 article = 1 fichier.** Métadonnées (niveau, poids, n) + claims + impact capteur (avant→après) | la brique de provenance |
+| `data/signal-mapping.md` | **Dictionnaire** signal→capteurs partagé ; `source_initiale` fige la recette d'un signal | réutilisé par tous les articles |
+| `data/pending-claims.md` | **Journal** horodaté des claims capés/refusés + seuil de corroboration pour réactiver | rien n'est perdu |
+| `data/phase-reference.md` | **Valeurs courantes** des 8 capteurs par sous-phase — pas d'historique inline | l'état, pas le journal |
+
+### Deux sens de traçabilité
+
+- **Descendant — article → capteur** : entièrement **tracé**. Chaque fichier source liste les deltas qu'il a appliqués (avant→après). On sait toujours ce qu'un article a changé.
+- **Remontant — capteur → articles** : **reconstructible** (grep des fichiers sources) mais **non matérialisé** en un point unique. `phase-reference.md` ne porte que la valeur finale. → c'est précisément le rôle du futur **Wiki** (fiche capteur listant ses sources via backlinks). Différé tant que le volume de sources est faible (D_007).
+
+### Règle d'or
+
+- **1 source = 1 fichier**, jamais fusionnée — c'est le socle des backlinks du Wiki.
+- Les dumps de recherche groupés (`data/sources/_research-*.md`, préfixe `_`) sont **hors-système** : matière qualitative non ingérée, n'impactant aucun capteur. À éclater en fichiers individuels au moment de l'ingestion, puis retirer.
+
+---
+
 ## État des domaines
 
 Migration D_002 terminée : tout le qualitatif est sorti de `phase-reference.md` (désormais 100% quantitatif).
@@ -165,7 +215,10 @@ Migration D_002 terminée : tout le qualitatif est sorti de `phase-reference.md`
 | Nutrition | `domains/nutrition.md` | ✅ reviewed | Non |
 | Communication couple | `domains/communication.md` | ✅ reviewed | Oui |
 | Activités ensemble | `domains/activites.md` | ✅ reviewed | Oui |
-| Santé pratique | `domains/sante.md` | 🟡 draft (couverture 2/5) | Oui |
-| Intimité | `domains/intimite.md` | 🟡 draft (light authoring, à relire) | Oui |
-| Sommeil | `domains/sommeil.md` | 🔴 à créer (aucune matière source) | Oui |
-| Mental / cognitif | `domains/mental.md` | 🔴 à créer (aucune matière source) | Oui |
+| Santé pratique | `domains/sante.md` | ✅ reviewed (3/5, gaps milieu de cycle assumés) | Non |
+| Intimité | `domains/intimite.md` | ✅ reviewed (4/4) | Non |
+| Sommeil | `domains/sommeil.md` | ✅ reviewed (3/5, gaps j5-j14) | Non |
+| Mental & émotionnel | `domains/mental.md` | ✅ reviewed (4/5) | Non |
+
+> Gaps folliculaire-milieu→ovulation (j5-j14) volontairement vides sur sommeil/mental/santé :
+> preuves faibles (cf. `data/sources/_research-2026-06-sleep-mental-physical.md`), résolution → null.

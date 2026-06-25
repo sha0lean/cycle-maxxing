@@ -15,6 +15,7 @@
 - [D_004](#d_004) — Métriques hybrides : référence scientifique + couche personnelle optionnelle (2026-06-25)
 - [D_005](#d_005) — Coefficients signal→capteur phase-dépendants à raffinement progressif (2026-06-25)
 - [D_006](#d_006) — Données data/*.md consommées via codegen au build (2026-06-25)
+- [D_007](#d_007) — Provenance par fichier source ; vue inverse différée au Wiki (2026-06-25)
 
 ---
 
@@ -99,3 +100,17 @@
 | **justification** | La Vue Frise a besoin des données côté client (scrub interactif). `data/` vit hors de `app/` (avec `docs/`) donc inaccessible en lecture runtime sur Vercel. Le codegen produit un artefact déployable, typé, importable côté client, sans lecture fichier au runtime. La source unique reste les `.md` édités par `ingest-source`. |
 | **alternatives** | Lecture serveur runtime (`fs` + props) — impose de déplacer `data/` dans `app/` et de parser à chaque requête, plus fragile. Données TS statiques écrites à la main — désync garantie avec `ingest-source` qui édite les `.md`. |
 | **conséquences** | `app/lib/generated/` est committé mais ne s'édite jamais à la main (régénéré). `phase-reference.md` a un format custom (sections `##`/`###` + blocs chiffrés) parsé sans `gray-matter` ; les `domains/*.md` à frontmatter utiliseront `gray-matter`. Toute évolution du format `.md` impose d'adapter le parser. |
+
+---
+
+### D_007
+**Provenance par fichier source ; vue inverse différée au Wiki**
+
+*25 juin 2026 — en session*
+
+| | |
+|---|---|
+| **décision** | Chaque source ingérée = **un fichier indépendant** dans `data/sources/`, portant ses propres claims et l'impact (avant→après) sur chaque capteur. `signal-mapping.md` (recettes signal→capteurs partagées) et `pending-claims.md` (journal des claims capés/refusés) complètent. `phase-reference.md` ne stocke que les **valeurs courantes**, sans historique inline. La traçabilité inverse **capteur → sources** est reconstructible (grep) mais **non matérialisée** : elle sera fournie par le Wiki. |
+| **justification** | La provenance par fichier source rend chaque article auditable et réactivable isolément, et constitue la **brique de backlink du futur Wiki**. Matérialiser un index inverse par capteur dès maintenant (2 sources) serait de la sur-ingénierie et un second endroit à garder synchrone. |
+| **alternatives** | Index central de provenance par capteur — utile à grande échelle mais redondant et fragile (double source de vérité) tant que le volume est faible. Historique inline dans `phase-reference.md` — pollue la couche quantitative et casse le codegen/parsing. Fusionner plusieurs articles par fichier — détruit les backlinks et l'auditabilité par source. |
+| **conséquences** | L'audit d'une valeur de capteur passe aujourd'hui par un grep des fichiers sources ; le Wiki (backlog `[?]`) portera la vue inverse. Les dumps de recherche groupés (`data/sources/_research-*.md`, préfixe `_`) sont tolérés comme matière qualitative **hors-système**, à éclater en fichiers individuels au moment de l'ingestion. |
