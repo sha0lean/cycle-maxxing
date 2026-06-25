@@ -74,3 +74,15 @@ export function getDayInfo(dayNumber: number, personalMetrics?: Partial<Metrics>
 export function getCurrentPhase(j1: Date, date: Date = new Date()): PhaseId {
   return findReferenceEntry(cycleDayFromDate(j1, date)).phase
 }
+
+// Plages contiguës de chaque phase sur le cycle de référence (pour les bandes de la Frise).
+// Fusionne les sous-phases successives d'une même phase. PHASE_REFERENCE est ordonné par jour.
+export function getPhaseSpans(): { phase: PhaseId; start: number; end: number }[] {
+  const spans: { phase: PhaseId; start: number; end: number }[] = []
+  for (const e of PHASE_REFERENCE) {
+    const last = spans[spans.length - 1]
+    if (last && last.phase === e.phase) last.end = e.dayEnd
+    else spans.push({ phase: e.phase, start: e.dayStart, end: e.dayEnd })
+  }
+  return spans
+}

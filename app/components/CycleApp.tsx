@@ -6,9 +6,8 @@
 import { useEffect, useState } from 'react'
 import { ensureSeeded, loadDayLogs, saveCycles, saveDayLogs } from '@/lib/storage'
 import { findActiveCycle, startNewCycle, markRulesEnded, upsertDayLog } from '@/lib/cycle-actions'
-import { cycleDayFromDate, getDayInfo, averageDayLogs } from '@/lib/cycle'
-import { resolveDomains } from '@/lib/domain-loader'
-import { Dashboard } from '@/components/Dashboard'
+import { cycleDayFromDate } from '@/lib/cycle'
+import { Frise } from '@/components/Frise'
 import { Settings } from '@/components/Settings'
 import type { CycleEntry, DayLog, Metrics } from '@/lib/types'
 
@@ -27,10 +26,7 @@ export function CycleApp() {
   }
 
   const active = findActiveCycle(cycles) ?? cycles[cycles.length - 1]
-  const dayNumber = cycleDayFromDate(active.j1)
-  const personal = averageDayLogs(logs, dayNumber)
-  const info = getDayInfo(dayNumber, personal)
-  const domains = resolveDomains(dayNumber)
+  const todayDay = cycleDayFromDate(active.j1)
 
   // Mutations : on persiste explicitement après chaque action (pas d'effet → pas de save au montage).
   const handleStartNewCycle = () => {
@@ -44,12 +40,13 @@ export function CycleApp() {
     saveCycles(next)
   }
   // Saisie : ne garde que les métriques ajustées, fusionnées avec la saisie existante du jour (D_004).
-  const handleSaveMetrics = (partial: Partial<Metrics>) => {
-    const existing = logs.find((l) => l.cycleId === active.id && l.dayNumber === dayNumber)
+  // La Frise indique le jour ciblé (celui fixé sous le curseur).
+  const handleSaveMetrics = (day: number, partial: Partial<Metrics>) => {
+    const existing = logs.find((l) => l.cycleId === active.id && l.dayNumber === day)
     const merged = { ...existing?.metrics, ...partial }
     const next = upsertDayLog(logs, {
       cycleId: active.id,
-      dayNumber,
+      dayNumber: day,
       metrics: merged,
       loggedAt: new Date(),
     })
@@ -59,12 +56,7 @@ export function CycleApp() {
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
-      <Dashboard
-        info={info}
-        hasPersonal={!!personal}
-        domains={domains}
-        onSaveMetrics={handleSaveMetrics}
-      />
+      <Frise logs={logs} todayDay={todayDay} onSaveMetrics={handleSaveMetrics} />
       <Settings
         cycles={cycles}
         onStartNewCycle={handleStartNewCycle}

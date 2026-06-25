@@ -5,6 +5,7 @@ import {
   averageDayLogs,
   getDayInfo,
   getCurrentPhase,
+  getPhaseSpans,
 } from '@/lib/cycle'
 import type { DayLog } from '@/lib/types'
 
@@ -109,5 +110,26 @@ describe('getCurrentPhase', () => {
   it('déduit la phase à partir de j1 et de la date', () => {
     const j1 = new Date(2026, 4, 31) // 31 mai
     expect(getCurrentPhase(j1, new Date(2026, 5, 12))).toBe('ovulation') // 12 juin = j13
+  })
+})
+
+describe('getPhaseSpans', () => {
+  const spans = getPhaseSpans()
+
+  it('couvre le cycle de référence en continu, sans trou ni chevauchement', () => {
+    expect(spans[0].start).toBe(1)
+    for (let i = 1; i < spans.length; i++) {
+      expect(spans[i].start).toBe(spans[i - 1].end + 1) // contiguïté
+    }
+  })
+
+  it('fusionne les sous-phases en une seule plage par phase (5 phases)', () => {
+    expect(spans.map((s) => s.phase)).toEqual([
+      'regles',
+      'folliculaire',
+      'ovulation',
+      'luteale',
+      'spm',
+    ])
   })
 })
