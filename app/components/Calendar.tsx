@@ -3,11 +3,13 @@
 // Vue Calendrier (B-001) : grille mensuelle colorée par phase, navigation mois,
 // clic sur un jour → panneau stats de ce j(N). Les jours futurs sont projetés (atténués + dashed).
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { monthMatrix } from '@/lib/calendar'
 import { DayPanel } from '@/components/DayPanel'
+import { ViewToggle, type MainView } from '@/components/ViewToggle'
 import { PHASE_COLOR_VAR } from '@/lib/labels'
 import { cn } from '@/lib/utils'
+import { wrapCycleDay } from '@/lib/cycle'
 import type { CycleEntry, DayLog, Metrics } from '@/lib/types'
 
 const WEEKDAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D']
@@ -20,13 +22,21 @@ type CalendarProps = {
   cycles: CycleEntry[]
   todayDay: number
   logs: DayLog[]
+  view: MainView
+  onViewChange: (v: MainView) => void
+  onDayChange: (day: number) => void // remonte le jour sélectionné vers la navbar
   onSaveMetrics: (day: number, partial: Partial<Metrics>) => void
 }
 
-export function Calendar({ cycles, todayDay, logs, onSaveMetrics }: CalendarProps) {
+export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChange, onSaveMetrics }: CalendarProps) {
   const today = new Date()
   const [cursor, setCursor] = useState({ year: today.getFullYear(), month: today.getMonth() })
-  const [selectedDay, setSelectedDay] = useState(todayDay)
+  const [selectedDay, setSelectedDay] = useState(wrapCycleDay(todayDay))
+
+  // Remonte le jour sélectionné vers la navbar.
+  useEffect(() => {
+    onDayChange(selectedDay)
+  }, [selectedDay, onDayChange])
 
   const weeks = monthMatrix(cycles, cursor.year, cursor.month, today)
 
@@ -42,6 +52,13 @@ export function Calendar({ cycles, todayDay, logs, onSaveMetrics }: CalendarProp
       <DayPanel displayDay={selectedDay} logs={logs} onSaveMetrics={onSaveMetrics} />
 
       <section className="rounded-xl border border-border bg-card p-5">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Frise du cycle
+          </h2>
+          <ViewToggle view={view} onChange={onViewChange} />
+        </div>
+
         <header className="mb-4 flex items-center justify-between">
           <button
             type="button"

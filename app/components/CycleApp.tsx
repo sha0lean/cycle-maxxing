@@ -6,21 +6,21 @@
 import { useEffect, useState } from 'react'
 import { ensureSeeded, loadDayLogs, saveCycles, saveDayLogs } from '@/lib/storage'
 import { findActiveCycle, startNewCycle, markRulesEnded, upsertDayLog } from '@/lib/cycle-actions'
-import { cycleDayFromDate } from '@/lib/cycle'
+import { cycleDayFromDate, findReferenceEntry, wrapCycleDay } from '@/lib/cycle'
 import { Frise } from '@/components/Frise'
 import { Calendar } from '@/components/Calendar'
 import { Patterns } from '@/components/Patterns'
 import { Settings } from '@/components/Settings'
-import { cn } from '@/lib/utils'
+import { CycleNav, type CycleTab } from '@/components/CycleNav'
+import type { MainView } from '@/components/ViewToggle'
 import type { CycleEntry, DayLog, Metrics } from '@/lib/types'
-
-type View = 'frise' | 'calendar' | 'patterns'
-const VIEW_LABELS: Record<View, string> = { frise: 'Frise', calendar: 'Calendrier', patterns: 'Patterns' }
 
 export function CycleApp() {
   const [cycles, setCycles] = useState<CycleEntry[] | null>(null)
   const [logs, setLogs] = useState<DayLog[]>([])
-  const [view, setView] = useState<View>('frise')
+  const [tab, setTab] = useState<CycleTab>('cycle') // navbar : Cycle (frise/cal) ↔ Patterns
+  const [mainView, setMainView] = useState<MainView>('frise') // sous-vue du Cycle
+  const [displayDay, setDisplayDay] = useState(1) // jour-de-cycle pointé (1→27), alimente la navbar
 
   // Amorçage au montage (localStorage client-only).
   useEffect(() => {
@@ -34,6 +34,10 @@ export function CycleApp() {
 
   const active = findActiveCycle(cycles) ?? cycles[cycles.length - 1]
   const todayDay = cycleDayFromDate(active.j1)
+
+  // La navbar suit le jour pointé en vue Cycle ; en Patterns, elle retombe sur aujourd'hui.
+  const navDay = tab === 'patterns' ? wrapCycleDay(todayDay) : displayDay
+  const navEntry = findReferenceEntry(navDay)
 
   // Mutations : on persiste explicitement après chaque action (pas d'effet → pas de save au montage).
   const handleStartNewCycle = () => {
@@ -62,35 +66,30 @@ export function CycleApp() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
-      {/* Nav haute : bascule entre les vues */}
-      <nav className="flex gap-1 rounded-lg bg-secondary p-1 text-sm">
-        {(['frise', 'calendar', 'patterns'] as const).map((v) => (
-          <button
-            key={v}
-            type="button"
-            onClick={() => setView(v)}
-            className={cn(
-              'flex-1 rounded-md px-3 py-1.5 font-medium transition',
-              view === v ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground',
-            )}
-          >
-            {VIEW_LABELS[v]}
-          </button>
-        ))}
-      </nav>
+    <div className="mx-auto w-full max-w-5xl space-y-6 p-6">
+      <CycleNav dayNumber={navDay} entry={navEntry} tab={tab} onTabChange={setTab} />
 
-      {view === 'frise' ? (
-        <Frise logs={logs} todayDay={todayDay} onSaveMetrics={handleSaveMetrics} />
-      ) : view === 'calendar' ? (
+      {tab === 'patterns' ? (
+        <Patterns activeCycle={active} todayDay={todayDay} logs={logs} />
+      ) : mainView === 'frise' ? (
+        <Frise
+          logs={logs}
+          todayDay={todayDay}
+          view={mainView}
+          onViewChange={setMainView}
+          onDayChange={setDisplayDay}
+          onSaveMetrics={handleSaveMetrics}
+        />
+      ) : (
         <Calendar
           cycles={cycles}
           todayDay={todayDay}
           logs={logs}
+          view={mainView}
+          onViewChange={setMainView}
+          onDayChange={setDisplayDay}
           onSaveMetrics={handleSaveMetrics}
         />
-      ) : (
-        <Patterns activeCycle={active} todayDay={todayDay} logs={logs} />
       )}
 
       <Settings

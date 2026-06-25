@@ -78,17 +78,17 @@
   --border: #e2daef;
   --input: #e2daef;
   --ring: #8b6fd4;
-  --chart-1: #d4607a;
-  --chart-2: #5b8ac4;
-  --chart-3: #8b6fd4;
-  --chart-4: #c47a30;
-  --chart-5: #c44b42;
+  --chart-1: #0891b2; /* œstrogène — cyan */
+  --chart-2: #e11d48; /* progestérone — rose */
+  --chart-3: #ca8a04; /* LH — jaune/ambre */
+  --chart-4: #16a34a; /* FSH — vert */
+  --chart-5: #9333ea; /* BBT — violet */
   --radius: 0.75rem;
-  --phase-regles: #d4607a;
-  --phase-folliculaire: #5b8ac4;
-  --phase-ovulation: #8b6fd4;
-  --phase-luteale: #c47a30;
-  --phase-spm: #c44b42;
+  --phase-regles: #e11d6a;
+  --phase-folliculaire: #0284c7;
+  --phase-ovulation: #7c3aed;
+  --phase-luteale: #ea7317;
+  --phase-spm: #dc2626;
   --urgence-normal: #1d9e75;
   --urgence-attention: #ef9f27;
   --urgence-critique: #e24b4a;
@@ -122,16 +122,16 @@
   --border: #2e2845;
   --input: #2e2845;
   --ring: #c5b3f5;
-  --chart-1: #f4a7b9;
-  --chart-2: #b8d4f0;
-  --chart-3: #c5b3f5;
-  --chart-4: #f5c8a0;
-  --chart-5: #f0908a;
-  --phase-regles: #f4a7b9;
-  --phase-folliculaire: #b8d4f0;
-  --phase-ovulation: #c5b3f5;
-  --phase-luteale: #f5c8a0;
-  --phase-spm: #f0908a;
+  --chart-1: #22d3ee; /* œstrogène — cyan */
+  --chart-2: #fb7185; /* progestérone — rose */
+  --chart-3: #facc15; /* LH — jaune */
+  --chart-4: #4ade80; /* FSH — vert */
+  --chart-5: #c084fc; /* BBT — violet */
+  --phase-regles: #ff5d8f;
+  --phase-folliculaire: #38bdf8;
+  --phase-ovulation: #a855f7;
+  --phase-luteale: #fb923c;
+  --phase-spm: #f87171;
   --urgence-normal: #1d9e75;
   --urgence-attention: #ef9f27;
   --urgence-critique: #e24b4a;

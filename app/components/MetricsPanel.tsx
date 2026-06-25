@@ -5,19 +5,17 @@
 
 import { useState } from 'react'
 import { METRIC_KEYS } from '@/lib/types'
-import type { Metrics, MetricKey, PhaseId } from '@/lib/types'
-import { METRIC_LABELS, PHASE_COLOR_VAR } from '@/lib/labels'
+import type { Metrics, MetricKey } from '@/lib/types'
+import { METRIC_LABELS, METRIC_COLOR } from '@/lib/labels'
 
 type MetricsPanelProps = {
-  phase: PhaseId
   display: Metrics // barre principale (réalité de Julie si saisie, sinon référence)
   reference: Metrics // valeurs scientifiques de référence
   hasPersonal: boolean // affiche le marqueur de référence dès qu'une saisie personnelle existe
   onSaveMetrics: (partial: Partial<Metrics>) => void // enregistre les seules métriques ajustées
 }
 
-export function MetricsPanel({ phase, display, reference, hasPersonal, onSaveMetrics }: MetricsPanelProps) {
-  const color = PHASE_COLOR_VAR[phase]
+export function MetricsPanel({ display, reference, hasPersonal, onSaveMetrics }: MetricsPanelProps) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState<Partial<Metrics>>({}) // uniquement les métriques touchées
 
@@ -70,10 +68,11 @@ export function MetricsPanel({ phase, display, reference, hasPersonal, onSaveMet
         )}
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4">
         {METRIC_KEYS.map((key) => {
           const value = editing ? draft[key] ?? display[key] : display[key]
           const ref = reference[key]
+          const color = METRIC_COLOR[key]
           const showMarker = !editing && hasPersonal && value !== ref
           return (
             <div key={key} className="space-y-1.5">
