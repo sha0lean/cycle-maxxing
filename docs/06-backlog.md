@@ -15,7 +15,8 @@
 - [x] **B-003** Panel stats au clic sur un jour (métriques + conseils multi-domaines)
 - [x] **B-004** Saisie j1 + durée règles + historique cycles (Settings)
 - [x] **B-005** Vue récap hebdo et cycle entier (même données, angles temporels différents)
-- [x] **B-006** Fiches domaines complètes (8 domaines × 8 sous-phases) — granularité selon le niveau de preuve ; gaps folliculaire-milieu→ovulation assumés (cf. data/sources/_research-2026-06)
+- [x] **B-006** Fiches domaines complètes (8 domaines × 8 sous-phases) — granularité selon le niveau de preuve ; gaps folliculaire-milieu→ovulation (j5-j14) assumés (preuves faibles)
+- [ ] **B-011** Découpage adaptatif des phases — mettre le découpage à l'échelle de la durée réelle du cycle/règles de Julie (ovulation = durée − 14, folliculaire décalée par la durée des règles) au lieu des bornes 27j codées en dur dans `findReferenceEntry`. Branche `cycle-stats` (durée moyenne déjà calculée) dans le calcul de phase. **Chaînon manquant entre D_003 (on tracke les dates) et l'affichage (on n'affine pas encore).** Distinct de B-010 : ajuste le *calendrier des phases*, pas les *valeurs* des capteurs.
 
 ### v2
 
