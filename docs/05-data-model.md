@@ -155,15 +155,17 @@ Le loader résout les chevauchements en prenant la règle la plus spécifique (p
 
 ---
 
-## Domaines à créer
+## État des domaines
 
-| Domaine | Fichier cible | Status | Enrichir |
+Migration D_002 terminée : tout le qualitatif est sorti de `phase-reference.md` (désormais 100% quantitatif).
+
+| Domaine | Fichier | Status | Enrichir |
 |---|---|---|---|
-| Sport | `domains/sport.md` | À migrer depuis phase-reference | Non |
-| Nutrition | `domains/nutrition.md` | À migrer depuis phase-reference | Non |
-| Intimité | `domains/intimite.md` | À créer | Oui |
-| Communication couple | `domains/communication.md` | À créer | Oui |
-| Activités ensemble | `domains/activites.md` | À créer | Oui |
-| Sommeil | `domains/sommeil.md` | À créer | Oui |
-| Santé pratique | `domains/sante.md` | À créer | Oui |
-| Mental / cognitif | `domains/mental.md` | À créer | Oui |
+| Sport | `domains/sport.md` | ✅ reviewed | Non |
+| Nutrition | `domains/nutrition.md` | ✅ reviewed | Non |
+| Communication couple | `domains/communication.md` | ✅ reviewed | Oui |
+| Activités ensemble | `domains/activites.md` | ✅ reviewed | Oui |
+| Santé pratique | `domains/sante.md` | 🟡 draft (couverture 2/5) | Oui |
+| Intimité | `domains/intimite.md` | 🟡 draft (light authoring, à relire) | Oui |
+| Sommeil | `domains/sommeil.md` | 🔴 à créer (aucune matière source) | Oui |
+| Mental / cognitif | `domains/mental.md` | 🔴 à créer (aucune matière source) | Oui |
