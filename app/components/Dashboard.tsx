@@ -8,16 +8,17 @@ import {
   PHASE_COLOR_VAR,
   URGENCE_COLOR_VAR,
 } from '@/lib/labels'
-import type { DayInfo } from '@/lib/types'
+import type { DayInfo, Metrics } from '@/lib/types'
 import type { ResolvedDomain } from '@/lib/domain-loader'
 
 type DashboardProps = {
   info: DayInfo
   hasPersonal: boolean
   domains: ResolvedDomain[]
+  onSaveMetrics: (partial: Partial<Metrics>) => void
 }
 
-export function Dashboard({ info, hasPersonal, domains }: DashboardProps) {
+export function Dashboard({ info, hasPersonal, domains, onSaveMetrics }: DashboardProps) {
   return (
     <div className="space-y-6">
       <header className="space-y-2">
@@ -44,6 +45,7 @@ export function Dashboard({ info, hasPersonal, domains }: DashboardProps) {
         display={info.displayMetrics}
         reference={info.referenceMetrics}
         hasPersonal={hasPersonal}
+        onSaveMetrics={onSaveMetrics}
       />
 
       <DomainTabs domains={domains} />
