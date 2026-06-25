@@ -18,9 +18,8 @@ energie:25  humeur:32  libido:6   fatigue:90  sensibilite:68  stress:44  douleur
 - keywords: fatigue profonde · crampes · introspection · besoin de chaleur
 - social: faible
 - résumé: Corps en récupération. Crampes j1-j2 possibles. Elle a besoin de ralentir totalement.
-- faire: bouillotte · thé chaud · chocolat chaud · présence silencieuse · films/série
-- éviter: plans sportifs · discussions importantes · commenter sa fatigue
-- conseil: Suis son rythme sans le commenter.
+- faire: bouillotte · thé chaud · chocolat chaud · films/série
+- éviter: plans sportifs
 
 ### j3-j4 — Fin
 ```
@@ -29,7 +28,6 @@ energie:36  humeur:47  libido:17  fatigue:68  sensibilite:52  stress:32  douleur
 - urgence: attention
 - keywords: fatigue décroissante · légère reprise · encore introvertie
 - résumé: Crampes s'estompent. Elle remonte doucement mais reste en mode nid.
-- faire: même approche mais allégée
 
 ---
 
@@ -43,7 +41,7 @@ energie:65  humeur:67  libido:45  fatigue:28  sensibilite:27  stress:20  douleur
 - keywords: énergie qui revient · optimisme naissant · envie de bouger
 - social: moyen
 - résumé: La remontée commence. L'élan revient sans être encore à fond.
-- faire: proposer sortie légère · laisser la conversation venir
+- faire: proposer sortie légère
 
 ### j8-j9 — Milieu
 ```
@@ -53,7 +51,7 @@ energie:80  humeur:80  libido:58  fatigue:15  sensibilite:23  stress:14  douleur
 - keywords: énergie croissante · curiosité · sociable · envie de projets
 - social: élevé
 - résumé: Elle est réceptive, aventurière. Bonne période pour planifier ensemble.
-- faire: activités nouvelles · discussions importantes de couple
+- faire: activités nouvelles
 
 ### j10-j11 — Fin
 ```
@@ -82,7 +80,7 @@ energie:95  humeur:95  libido:92  fatigue:8   sensibilite:25  stress:10  douleur
 - keywords: peak de confiance · charisme max · très sociable · séductrice · éloquente · envie de plaire
 - social: très élevé
 - résumé: Sommet absolu du cycle. Énergie, confiance, attractivité au maximum. Le meilleur moment du mois.
-- faire: grands plans · resto spécial · sujets sérieux de couple · connexion physique max · compliments sincères
+- faire: grands plans · resto spécial · connexion physique max
 - noter: elle est objectivement plus attirante pour les autres aussi — biologique, pas une raison de jalousie
 - conseil: Peak du cycle. Tout ce que vous voulez faire ensemble, c'est maintenant.
 
@@ -106,8 +104,7 @@ energie:60  humeur:60  libido:39  fatigue:47  sensibilite:55  stress:39  douleur
 - social: moyen
 - résumé: Elle redescend. L'énergie baisse sans s'effondrer. Besoin de confort et d'intimité.
 - faire: soirée calme · comfort food · cuisine ensemble · câlins · série
-- éviter: plans sociaux chargés · discussions importantes
-- conseil: Si elle est dans sa bulle, c'est normal — sois présent sans pression.
+- éviter: plans sociaux chargés
 
 ### j18-j20 — Fin
 ```
@@ -116,8 +113,6 @@ energie:45  humeur:46  libido:27  fatigue:63  sensibilite:68  stress:52  douleur
 - urgence: attention
 - keywords: fatigue qui s'installe · mélancolie · patience réduite · besoin de validation
 - résumé: La patience raccourcit. Elle peut être mélancolique sans raison. SPM approche.
-- faire: valider ses émotions · réduire les stimuli stressants
-- éviter: tout sujet conflictuel · interpréter son humeur comme personnel
 
 ---
 
@@ -131,9 +126,6 @@ energie:22  humeur:23  libido:15  fatigue:88  sensibilite:90  stress:76  douleur
 - keywords: hypersensible · irritable · gonflement · seins sensibles · anxiété · fatigue marquée
 - social: faible
 - résumé: Pic de chute hormonale. Émotions amplifiées par nature, pas par choix. Réactions disproportionnées = neurochimie.
-- faire: valider sans argumenter ("je comprends" > "logiquement...") · présence silencieuse si pleurs · chocolat noir · demander ce dont elle a besoin · espace sans disparaître
-- éviter: "t'es bizarre" · "c'est tes hormones" · "t'exagères" · discussions conflictuelles · minimiser · comparer à "d'habitude" · disparaître
-- conseil: Ton travail : valider, pas corriger.
 
 ### j24-j27 — SPM critique
 ```
@@ -142,6 +134,4 @@ energie:10  humeur:13  libido:7   fatigue:98  sensibilite:98  stress:86  douleur
 - urgence: critique
 - keywords: hypersensibilité maximale · pleurs sans raison · seins très sensibles · gonflement · maux de tête · envies intenses · sommeil perturbé
 - résumé: Phase la plus intense. Chute hormonale brutale. Tout est amplifié. Soutien sans correction.
-- faire: mode soutien silencieux · chocolat · câlins si demandés · ibuprofène accessible · être là sans exiger de retour
-- règle absolue: aucune discussion importante jusqu'aux prochaines règles
-- conseil: Ces jours-là se souviennent d'eux-mêmes. Comment tu gères compte pour la suite.
+- faire: câlins si demandés · ibuprofène accessible
