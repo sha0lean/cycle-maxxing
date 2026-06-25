@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   cycleDayFromDate,
   findReferenceEntry,
+  toReferenceDay,
   averageDayLogs,
   getDayInfo,
   getCurrentPhase,
@@ -58,6 +59,47 @@ describe('findReferenceEntry', () => {
 
   it('avant j1, retombe sur la première sous-phase', () => {
     expect(findReferenceEntry(0).id).toBe('j1-j2')
+  })
+})
+
+describe('toReferenceDay (découpage adaptatif B-011)', () => {
+  it('identité quand la durée vaut la référence (27j)', () => {
+    expect(toReferenceDay(13, 27)).toBe(13)
+    expect(toReferenceDay(1, 27)).toBe(1)
+    expect(toReferenceDay(25, 27)).toBe(25)
+  })
+
+  it('cycle long (31j) : l’ovulation réelle (j17) mappe sur le pic de référence (j13)', () => {
+    expect(toReferenceDay(17, 31)).toBe(13) // ovulation = 31 - 14 = j17
+  })
+
+  it('cycle long (31j) : la lutéale glisse d’un décalage fixe', () => {
+    expect(toReferenceDay(20, 31)).toBe(16) // 20 - (17-13) = 16 (lutéale début)
+    expect(toReferenceDay(25, 31)).toBe(21) // 25 - 4 = 21 (SPM début)
+  })
+
+  it('cycle court (24j) : l’ovulation réelle (j10) mappe sur j13', () => {
+    expect(toReferenceDay(10, 24)).toBe(13) // ovulation = 24 - 14 = j10
+  })
+})
+
+describe('findReferenceEntry adaptatif (B-011)', () => {
+  it('cycle 31j : j17 est l’ovulation (pas j13 comme en fixe)', () => {
+    const e = findReferenceEntry(17, 31)
+    expect(e.phase).toBe('ovulation')
+    expect(e.id).toBe('j13')
+  })
+
+  it('cycle 31j : j13 est encore folliculaire (décalé vs le fixe où j13 = ovulation)', () => {
+    expect(findReferenceEntry(13, 31).phase).toBe('folliculaire')
+  })
+
+  it('cycle 31j : j25 est en SPM', () => {
+    expect(findReferenceEntry(25, 31).phase).toBe('spm')
+  })
+
+  it('sans durée fournie, comportement identique au découpage fixe', () => {
+    expect(findReferenceEntry(13).id).toBe(findReferenceEntry(13, 27).id)
   })
 })
 
