@@ -1,6 +1,6 @@
 'use client'
 
-import { METRIC_KEYS, type CycleEntry, type DayLog, type Metrics, type MetricKey } from '@/lib/types'
+import { METRIC_KEYS, type CycleEntry, type DayLog, type Metrics } from '@/lib/types'
 import { METRIC_LABELS } from '@/lib/labels'
 import { averageCycleLength } from '@/lib/cycle-stats'
 

@@ -63,9 +63,9 @@ export function CycleApp() {
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
-      {/* Nav haute : bascule entre les vues (Patterns à venir) */}
+      {/* Nav haute : bascule entre les vues */}
       <nav className="flex gap-1 rounded-lg bg-secondary p-1 text-sm">
-        {(['frise', 'calendar'] as const).map((v) => (
+        {(['frise', 'calendar', 'patterns'] as const).map((v) => (
           <button
             key={v}
             type="button"
