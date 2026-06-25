@@ -12,7 +12,7 @@ energie · humeur · libido · fatigue · sensibilite · stress · douleurs · i
 
 ### j1-j2 — Début
 ```
-energie:25  humeur:32  libido:6   fatigue:90  sensibilite:68  stress:44  douleurs:75  irritabilite:33
+energie:25  humeur:30  libido:6   fatigue:92  sensibilite:70  stress:44  douleurs:78  irritabilite:33
 ```
 - urgence: attention
 - keywords: fatigue profonde · crampes · introspection · besoin de chaleur
@@ -90,7 +90,7 @@ energie:85  humeur:88  libido:75  fatigue:15  sensibilite:32  stress:14  douleur
 
 ### j15-j17 — Début
 ```
-energie:60  humeur:60  libido:39  fatigue:47  sensibilite:55  stress:39  douleurs:2  irritabilite:32
+energie:56  humeur:56  libido:39  fatigue:54  sensibilite:63  stress:42  douleurs:4  irritabilite:35
 ```
 - urgence: attention
 - keywords: redescente progressive · besoin de nid · plus casanière · appétit augmente
@@ -99,7 +99,7 @@ energie:60  humeur:60  libido:39  fatigue:47  sensibilite:55  stress:39  douleur
 
 ### j18-j20 — Fin
 ```
-energie:45  humeur:46  libido:27  fatigue:63  sensibilite:68  stress:52  douleurs:7  irritabilite:49
+energie:42  humeur:44  libido:27  fatigue:68  sensibilite:71  stress:55  douleurs:7  irritabilite:52
 ```
 - urgence: attention
 - keywords: fatigue qui s'installe · mélancolie · patience réduite · besoin de validation
@@ -111,7 +111,7 @@ energie:45  humeur:46  libido:27  fatigue:63  sensibilite:68  stress:52  douleur
 
 ### j21-j23 — Début SPM ← JULIE ICI AU 21 JUIN
 ```
-energie:22  humeur:23  libido:15  fatigue:88  sensibilite:90  stress:76  douleurs:38  irritabilite:80
+energie:20  humeur:15  libido:15  fatigue:94  sensibilite:92  stress:81  douleurs:44  irritabilite:86
 ```
 - urgence: critique
 - keywords: hypersensible · irritable · gonflement · seins sensibles · anxiété · fatigue marquée
@@ -120,7 +120,7 @@ energie:22  humeur:23  libido:15  fatigue:88  sensibilite:90  stress:76  douleur
 
 ### j24-j27 — SPM critique
 ```
-energie:10  humeur:13  libido:7   fatigue:98  sensibilite:98  stress:86  douleurs:51  irritabilite:93
+energie:8   humeur:7   libido:7   fatigue:99  sensibilite:99  stress:91  douleurs:57  irritabilite:99
 ```
 - urgence: critique
 - keywords: hypersensibilité maximale · pleurs sans raison · seins très sensibles · gonflement · maux de tête · envies intenses · sommeil perturbé

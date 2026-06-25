@@ -53,15 +53,103 @@
 - type : inférée
 - source_initiale : pmc4625231
 
+### aldostérone élevée
+> Minéralocorticoïde élevé en début lutéal — rétention hydrosodée, ballonnements, seins sensibles
+- énergie      : -2
+- humeur       : -2
+- libido       : 0
+- fatigue      : +3
+- sensibilité  : +5
+- stress       : 0
+- douleurs     : +2
+- irritabilité : 0
+- type : inférée
+- source_initiale : izakova2021
+
+### mélatonine basse
+> Sécrétion de mélatonine réduite en SPM → sommeil fragmenté, récupération moindre
+- énergie      : -2
+- humeur       : -3
+- libido       : 0
+- fatigue      : +4
+- sensibilité  : 0
+- stress       : +3
+- douleurs     : 0
+- irritabilité : +3
+- type : inférée
+- source_initiale : nexha2024
+
+### température corporelle élevée
+> Progestérone ↑ → température centrale +0,3-0,5°C → sommeil moins réparateur en phase lutéale
+- énergie      : -3
+- humeur       : 0
+- libido       : 0
+- fatigue      : +4
+- sensibilité  : +2
+- stress       : 0
+- douleurs     : 0
+- irritabilité : 0
+- type : inférée
+- source_initiale : nexha2024  ← corroboré par alzueta2023, baker2020, zhang2020
+
+### chute d'œstrogène
+> Chute prémenstruelle/menstruelle des œstrogènes → migraine cataméniale, vulnérabilité émotionnelle
+- énergie      : 0
+- humeur       : -2
+- libido       : 0
+- fatigue      : +2
+- sensibilité  : +2
+- stress       : 0
+- douleurs     : +4
+- irritabilité : 0
+- type : inférée
+- source_initiale : raffaelli2023  ← corroboré par handy2022
+
+### sérotonine basse
+> Activité sérotoninergique réduite en SPM (inférée de l'efficacité des ISRS) → humeur basse, irritabilité
+- énergie      : 0
+- humeur       : -3
+- libido       : 0
+- fatigue      : 0
+- sensibilité  : 0
+- stress       : +2
+- douleurs     : 0
+- irritabilité : +3
+- type : inférée
+- source_initiale : jespersen2024
+
+### progestérone élevée
+> Progestérone lutéale ↑ (via allopregnanolone, modulation GABA-A) → axe émotionnel : anxiété, irritabilité, sensibilité. Fatigue volontairement minimale (déjà portée par « dominance sympathique » en lutéale — anti double-comptage).
+- énergie      : 0
+- humeur       : -2
+- libido       : 0
+- fatigue      : +1
+- sensibilité  : +2
+- stress       : +3
+- douleurs     : 0
+- irritabilité : +3
+- type : inférée
+- source_initiale : doornweerd2025  ← corroboré par hantsoo2020, li2020, nillni2021
+
+### inflammation / stress oxydatif
+> Marqueurs inflammatoires ↑ / antioxydants ↓ possibles en SPM (preuve limitée, hétérogène)
+- énergie      : 0
+- humeur       : 0
+- libido       : 0
+- fatigue      : +2
+- sensibilité  : +2
+- stress       : 0
+- douleurs     : +2
+- irritabilité : 0
+- type : inférée
+- source_initiale : granda2021
+
 ---
 
 ## Signaux à documenter (identifiés, pas encore mappés)
 
 - pic d'œstrogène
 - pic de progestérone
-- chute d'œstrogène
 - chute de progestérone
 - pic de LH
 - cortisol élevé
-- sérotonine basse
-- progestérone élevée
