@@ -1,13 +1,5 @@
-'use client'
+// Vue principale — présentationnelle : tout vient des props, l'état vit dans CycleApp.
 
-// Vue principale v1 : calcule le jour courant de Julie depuis localStorage et l'affiche.
-// localStorage est client-only → lecture dans un effet après hydratation.
-
-import { useEffect, useState } from 'react'
-import { ensureSeeded, loadDayLogs } from '@/lib/storage'
-import { findActiveCycle } from '@/lib/cycle-actions'
-import { cycleDayFromDate, getDayInfo, averageDayLogs } from '@/lib/cycle'
-import { resolveDomains, type ResolvedDomain } from '@/lib/domain-loader'
 import { MetricsPanel } from '@/components/MetricsPanel'
 import { DomainTabs } from '@/components/DomainTabs'
 import {
@@ -17,29 +9,17 @@ import {
   URGENCE_COLOR_VAR,
 } from '@/lib/labels'
 import type { DayInfo } from '@/lib/types'
+import type { ResolvedDomain } from '@/lib/domain-loader'
 
-export function Dashboard() {
-  const [info, setInfo] = useState<DayInfo | null>(null)
-  const [hasPersonal, setHasPersonal] = useState(false)
-  const [domains, setDomains] = useState<ResolvedDomain[]>([])
+type DashboardProps = {
+  info: DayInfo
+  hasPersonal: boolean
+  domains: ResolvedDomain[]
+}
 
-  useEffect(() => {
-    const cycles = ensureSeeded()
-    const logs = loadDayLogs()
-    const active = findActiveCycle(cycles) ?? cycles[cycles.length - 1]
-    const dayNumber = cycleDayFromDate(active.j1)
-    const personal = averageDayLogs(logs, dayNumber)
-    setHasPersonal(!!personal)
-    setInfo(getDayInfo(dayNumber, personal))
-    setDomains(resolveDomains(dayNumber))
-  }, [])
-
-  if (!info) {
-    return <div className="p-8 text-sm text-muted-foreground">Chargement…</div>
-  }
-
+export function Dashboard({ info, hasPersonal, domains }: DashboardProps) {
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
+    <div className="space-y-6">
       <header className="space-y-2">
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-2xl font-semibold">Jour {info.dayNumber}</h1>

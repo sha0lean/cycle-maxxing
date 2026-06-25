@@ -13,7 +13,7 @@
 - [ ] **B-001** Calendrier mensuel interactif avec phases colorées
 - [ ] **B-002** Vue Gantt du cycle complet avec curseur aujourd'hui
 - [ ] **B-003** Panel stats au clic sur un jour (métriques + conseils multi-domaines)
-- [ ] **B-004** Saisie j1 + durée règles + historique cycles (Settings)
+- [x] **B-004** Saisie j1 + durée règles + historique cycles (Settings)
 - [ ] **B-005** Vue récap hebdo et cycle entier (même données, angles temporels différents)
 - [ ] **B-006** Fiches domaines complètes (8 domaines × 8 sous-phases)
 
