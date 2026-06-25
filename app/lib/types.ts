@@ -61,6 +61,29 @@ export type PhaseReferenceEntry = {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Couche 2 — Domaines qualitatifs (data/domains/*.md parsés, D_002)
+// ─────────────────────────────────────────────────────────────
+
+// Conseils d'un domaine pour une plage de jours donnée (granularité libre).
+export type DomainEntry = {
+  range: string // identifiant de plage, ex : "j1-j2" | "j13"
+  dayStart: number // borne basse incluse
+  dayEnd: number // borne haute incluse
+  conseil: string // phrase de cadrage du domaine pour cette plage
+  faire: string[] // à privilégier
+  eviter: string[] // à éviter
+}
+
+// Un domaine qualitatif complet (sport, nutrition, …).
+export type Domain = {
+  id: string // identifiant kebab-case, ex : "sport"
+  label: string // nom affiché, ex : "Sport"
+  status: string // draft | reviewed | maîtrisé
+  enrichir: boolean // true si le domaine attend encore de la recherche
+  entries: DomainEntry[]
+}
+
+// ─────────────────────────────────────────────────────────────
 // Données trackées — saisies utilisateur persistées (localStorage v1)
 // ─────────────────────────────────────────────────────────────
 

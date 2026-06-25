@@ -7,7 +7,9 @@ import { useEffect, useState } from 'react'
 import { ensureSeeded, loadDayLogs } from '@/lib/storage'
 import { findActiveCycle } from '@/lib/cycle-actions'
 import { cycleDayFromDate, getDayInfo, averageDayLogs } from '@/lib/cycle'
+import { resolveDomains, type ResolvedDomain } from '@/lib/domain-loader'
 import { MetricsPanel } from '@/components/MetricsPanel'
+import { DomainTabs } from '@/components/DomainTabs'
 import {
   PHASE_LABELS,
   URGENCE_LABELS,
@@ -19,6 +21,7 @@ import type { DayInfo } from '@/lib/types'
 export function Dashboard() {
   const [info, setInfo] = useState<DayInfo | null>(null)
   const [hasPersonal, setHasPersonal] = useState(false)
+  const [domains, setDomains] = useState<ResolvedDomain[]>([])
 
   useEffect(() => {
     const cycles = ensureSeeded()
@@ -28,6 +31,7 @@ export function Dashboard() {
     const personal = averageDayLogs(logs, dayNumber)
     setHasPersonal(!!personal)
     setInfo(getDayInfo(dayNumber, personal))
+    setDomains(resolveDomains(dayNumber))
   }, [])
 
   if (!info) {
@@ -61,6 +65,8 @@ export function Dashboard() {
         reference={info.referenceMetrics}
         hasPersonal={hasPersonal}
       />
+
+      <DomainTabs domains={domains} />
     </div>
   )
 }
