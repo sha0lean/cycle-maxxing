@@ -76,8 +76,6 @@ energie:95  humeur:95  libido:92  fatigue:8   sensibilite:25  stress:10  douleur
 - keywords: peak de confiance · charisme max · très sociable · séductrice · éloquente · envie de plaire
 - social: très élevé
 - résumé: Sommet absolu du cycle. Énergie, confiance, attractivité au maximum. Le meilleur moment du mois.
-- faire: connexion physique max
-- noter: elle est objectivement plus attirante pour les autres aussi — biologique, pas une raison de jalousie
 
 ### j14 — Post-pic
 ```
@@ -98,7 +96,6 @@ energie:60  humeur:60  libido:39  fatigue:47  sensibilite:55  stress:39  douleur
 - keywords: redescente progressive · besoin de nid · plus casanière · appétit augmente
 - social: moyen
 - résumé: Elle redescend. L'énergie baisse sans s'effondrer. Besoin de confort et d'intimité.
-- faire: câlins
 
 ### j18-j20 — Fin
 ```
@@ -128,4 +125,3 @@ energie:10  humeur:13  libido:7   fatigue:98  sensibilite:98  stress:86  douleur
 - urgence: critique
 - keywords: hypersensibilité maximale · pleurs sans raison · seins très sensibles · gonflement · maux de tête · envies intenses · sommeil perturbé
 - résumé: Phase la plus intense. Chute hormonale brutale. Tout est amplifié. Soutien sans correction.
-- faire: câlins si demandés
