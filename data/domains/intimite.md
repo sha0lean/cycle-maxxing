@@ -1,10 +1,10 @@
 ---
 domain: intimite
 label: Intimité
-status: draft
+status: reviewed
 coverage: 4/4
 sources: aucune
-enrichir: oui
+enrichir: non
 ---
 
 ## j1-j9 — Règles + folliculaire début

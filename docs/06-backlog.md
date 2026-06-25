@@ -15,7 +15,7 @@
 - [x] **B-003** Panel stats au clic sur un jour (métriques + conseils multi-domaines)
 - [x] **B-004** Saisie j1 + durée règles + historique cycles (Settings)
 - [x] **B-005** Vue récap hebdo et cycle entier (même données, angles temporels différents)
-- [ ] **B-006** Fiches domaines complètes (8 domaines × 8 sous-phases)
+- [x] **B-006** Fiches domaines complètes (8 domaines × 8 sous-phases) — granularité selon le niveau de preuve ; gaps folliculaire-milieu→ovulation assumés (cf. data/sources/_research-2026-06)
 
 ### v2
 
