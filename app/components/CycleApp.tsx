@@ -8,12 +8,19 @@ import { ensureSeeded, loadDayLogs, saveCycles, saveDayLogs } from '@/lib/storag
 import { findActiveCycle, startNewCycle, markRulesEnded, upsertDayLog } from '@/lib/cycle-actions'
 import { cycleDayFromDate } from '@/lib/cycle'
 import { Frise } from '@/components/Frise'
+import { Calendar } from '@/components/Calendar'
+import { Patterns } from '@/components/Patterns'
 import { Settings } from '@/components/Settings'
+import { cn } from '@/lib/utils'
 import type { CycleEntry, DayLog, Metrics } from '@/lib/types'
+
+type View = 'frise' | 'calendar' | 'patterns'
+const VIEW_LABELS: Record<View, string> = { frise: 'Frise', calendar: 'Calendrier', patterns: 'Patterns' }
 
 export function CycleApp() {
   const [cycles, setCycles] = useState<CycleEntry[] | null>(null)
   const [logs, setLogs] = useState<DayLog[]>([])
+  const [view, setView] = useState<View>('frise')
 
   // Amorçage au montage (localStorage client-only).
   useEffect(() => {
@@ -56,7 +63,36 @@ export function CycleApp() {
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
-      <Frise logs={logs} todayDay={todayDay} onSaveMetrics={handleSaveMetrics} />
+      {/* Nav haute : bascule entre les vues (Patterns à venir) */}
+      <nav className="flex gap-1 rounded-lg bg-secondary p-1 text-sm">
+        {(['frise', 'calendar'] as const).map((v) => (
+          <button
+            key={v}
+            type="button"
+            onClick={() => setView(v)}
+            className={cn(
+              'flex-1 rounded-md px-3 py-1.5 font-medium transition',
+              view === v ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground',
+            )}
+          >
+            {VIEW_LABELS[v]}
+          </button>
+        ))}
+      </nav>
+
+      {view === 'frise' ? (
+        <Frise logs={logs} todayDay={todayDay} onSaveMetrics={handleSaveMetrics} />
+      ) : view === 'calendar' ? (
+        <Calendar
+          cycles={cycles}
+          todayDay={todayDay}
+          logs={logs}
+          onSaveMetrics={handleSaveMetrics}
+        />
+      ) : (
+        <Patterns activeCycle={active} todayDay={todayDay} logs={logs} />
+      )}
+
       <Settings
         cycles={cycles}
         onStartNewCycle={handleStartNewCycle}
