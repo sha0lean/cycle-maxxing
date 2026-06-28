@@ -39,7 +39,7 @@ export function Settings({ cycles, onStartNewCycle, onMarkRulesEnded }: Settings
   const avgRules = averageRulesLength(cycles)
 
   return (
-    <section className="rounded-xl border border-border bg-card p-5">
+    <section className="panel">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

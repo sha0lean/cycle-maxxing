@@ -47,7 +47,7 @@ export function Patterns({ activeCycle, todayDay, logs }: PatternsProps) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-card p-5">
+      <section className="panel">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -87,7 +87,7 @@ export function Patterns({ activeCycle, todayDay, logs }: PatternsProps) {
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-        <div className="space-y-4 rounded-xl border border-border bg-card p-5">
+        <div className="panel space-y-4">
           <div className="flex items-center justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-foreground">Vue hebdomadaire</h2>
@@ -109,7 +109,7 @@ export function Patterns({ activeCycle, todayDay, logs }: PatternsProps) {
           )}
         </div>
 
-        <div className="space-y-4 rounded-xl border border-border bg-card p-5">
+        <div className="panel space-y-4">
           <div className="flex items-center justify-between gap-4">
             <div>
               <h2 className="text-sm font-semibold text-foreground">Vue cycle</h2>

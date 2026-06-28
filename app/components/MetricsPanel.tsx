@@ -35,9 +35,9 @@ export function MetricsPanel({ display, reference, hasPersonal, onSaveMetrics }:
   const setMetric = (key: MetricKey, value: number) => setDraft((d) => ({ ...d, [key]: value }))
 
   return (
-    <section className="rounded-xl border border-border bg-card p-5">
+    <section className="panel">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
           Stats du jour
         </h2>
         {editing ? (
@@ -77,8 +77,13 @@ export function MetricsPanel({ display, reference, hasPersonal, onSaveMetrics }:
           return (
             <div key={key} className="space-y-1.5">
               <div className="flex items-baseline justify-between">
-                <span className="text-sm text-foreground">{METRIC_LABELS[key]}</span>
-                <span className="font-mono text-sm tabular-nums text-muted-foreground">{value}</span>
+                <span className="text-sm font-medium text-foreground">{METRIC_LABELS[key]}</span>
+                <span
+                  className="font-mono text-base font-semibold tabular-nums"
+                  style={{ color }}
+                >
+                  {value}
+                </span>
               </div>
               {editing ? (
                 <input
@@ -87,18 +92,23 @@ export function MetricsPanel({ display, reference, hasPersonal, onSaveMetrics }:
                   max={100}
                   value={value}
                   onChange={(e) => setMetric(key, Number(e.target.value))}
-                  className="h-1.5 w-full cursor-pointer"
+                  className="h-2 w-full cursor-pointer"
                   style={{ accentColor: color }}
                 />
               ) : (
-                <div className="relative h-1.5 w-full rounded-full bg-muted">
+                // Track « creusé » (ombre interne) + remplissage avec halo couleur → effet jauge.
+                <div className="relative h-2.5 w-full rounded-full bg-muted/80 shadow-[inset_0_1px_2px_rgb(0_0_0/0.4)]">
                   <div
                     className="h-full rounded-full transition-all duration-500"
-                    style={{ width: `${value}%`, backgroundColor: color }}
+                    style={{
+                      width: `${value}%`,
+                      backgroundColor: color,
+                      boxShadow: `0 0 10px ${color}66`,
+                    }}
                   />
                   {showMarker && (
                     <div
-                      className="absolute top-1/2 h-3 w-0.5 -translate-y-1/2 rounded bg-foreground/70"
+                      className="absolute top-1/2 h-4 w-0.5 -translate-y-1/2 rounded bg-foreground/80"
                       style={{ left: `${ref}%` }}
                       title={`Référence : ${ref}`}
                     />

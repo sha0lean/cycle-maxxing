@@ -155,7 +155,7 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
   const hasSelection = selected.size > 0
 
   return (
-    <section className="rounded-xl border border-border bg-card p-5">
+    <section className="panel">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">

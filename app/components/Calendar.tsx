@@ -51,7 +51,7 @@ export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChan
     <div className="space-y-6">
       <DayPanel displayDay={selectedDay} logs={logs} onSaveMetrics={onSaveMetrics} />
 
-      <section className="rounded-xl border border-border bg-card p-5">
+      <section className="panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Frise du cycle
@@ -97,7 +97,7 @@ export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChan
                 const isSelected =
                   selectable && cell.inMonth && cell.dayNumber === selectedDay
                 const bg = cell.phase
-                  ? `color-mix(in srgb, ${PHASE_COLOR_VAR[cell.phase]} 18%, transparent)`
+                  ? `color-mix(in srgb, ${PHASE_COLOR_VAR[cell.phase]} 28%, transparent)`
                   : 'transparent'
 
                 return (
@@ -106,14 +106,19 @@ export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChan
                     type="button"
                     disabled={!selectable}
                     onClick={() => selectable && setSelectedDay(cell.dayNumber!)}
-                    style={{ backgroundColor: bg }}
+                    style={{
+                      backgroundColor: bg,
+                      boxShadow: isSelected
+                        ? '0 4px 14px -4px color-mix(in srgb, var(--primary) 55%, transparent)'
+                        : undefined,
+                    }}
                     className={cn(
                       'relative flex aspect-square flex-col items-center justify-center rounded-lg border text-sm transition',
                       !cell.inMonth ? 'opacity-30' : cell.predicted ? 'opacity-60' : '',
                       cell.predicted ? 'border-dashed border-border' : 'border-transparent',
                       cell.isToday ? 'ring-2 ring-primary ring-offset-1 ring-offset-card' : '',
-                      isSelected ? '!border-solid !border-primary' : '',
-                      selectable ? 'hover:brightness-95' : 'cursor-default',
+                      isSelected ? 'scale-[1.04] !border-solid !border-primary' : '',
+                      selectable ? 'hover:brightness-110' : 'cursor-default',
                     )}
                   >
                     <span className="font-medium">{cell.date.getDate()}</span>

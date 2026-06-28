@@ -4,6 +4,7 @@
 // Présentation pure : la résolution jour → entrée est faite en amont par domain-loader.
 
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 import type { ResolvedDomain } from '@/lib/domain-loader'
 
 type DomainTabsProps = {
@@ -20,50 +21,84 @@ export function DomainTabs({ domains }: DomainTabsProps) {
   const current = domains.find((d) => d.id === active) ?? domains[0]
   const entry = current.entry
 
+  // Dossier plein (réf. « dossier rose ») : corps + onglet actif partagent la MÊME teinte
+  // → l'actif fusionne avec le corps. Les inactifs sont un lilas plus saturé qui dépasse
+  // du haut ; le corps recouvre leur base. Aucun trait fin, que des aplats remplis.
+  const folderFill = 'color-mix(in srgb, var(--primary) 14%, var(--card))'
+  // Inactifs : lilas plus discret (28% au lieu de 40%) → l'actif ressort davantage.
+  const tabFill = 'color-mix(in srgb, var(--primary) 28%, var(--card))'
+
   return (
-    <section className="rounded-xl border border-border bg-card p-5">
-      <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+    <section className="flex h-full flex-col animate-in fade-in slide-in-from-bottom-2 duration-500">
+      <h2 className="mb-2 px-1 font-display text-2xl font-semibold tracking-tight text-foreground">
         Conseils du jour
       </h2>
 
-      <div className="mb-4 flex flex-wrap gap-2">
-        {domains.map((d) => {
-          const isActive = d.id === current.id
-          return (
-            <button
-              key={d.id}
-              type="button"
-              onClick={() => setActive(d.id)}
-              className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
-                isActive
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {d.label}
-            </button>
-          )
-        })}
-      </div>
+      {/* flex-1 + flex-col → le dossier remplit la hauteur de la colonne (descend jusqu'en bas). */}
+      <div className="relative flex flex-1 flex-col">
+        {/* Rangée d'onglets : dépassent du haut (-mb-4 → corps recouvre leur base). justify-between
+            + sans inset → 1er onglet collé au bord gauche du dossier, dernier au bord droit. */}
+        <div className="flex items-end justify-between gap-1.5 overflow-x-auto overflow-y-hidden pt-1 -mb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {domains.map((d) => {
+            const isActive = d.id === current.id
+            return (
+              <button
+                key={d.id}
+                type="button"
+                onClick={() => setActive(d.id)}
+                style={{ backgroundColor: isActive ? folderFill : tabFill }}
+                className={cn(
+                  // pt-3 (12px) au-dessus du texte ; pb-7 (28px) dont 16px recouverts par le corps
+                  // (-mb-4) → 12px visibles en dessous = espace égal haut/bas autour du texte.
+                  // transform-gpu + origin-bottom : le lift/press pivote depuis la base (ancrage dossier).
+                  // active:scale → feedback de press au clic. ease-out duration-200 → départ vif, fin douce.
+                  // motion-reduce : on neutralise translate/scale pour respecter prefers-reduced-motion.
+                  'relative transform-gpu origin-bottom whitespace-nowrap rounded-t-2xl px-4 pt-3 pb-7 text-sm font-medium transition-all duration-200 ease-out active:scale-[0.96] motion-reduce:transition-none motion-reduce:transform-none',
+                  isActive
+                    ? 'text-foreground' // même teinte que le corps → fusion
+                    // Inactifs : texte plus discret, et au survol l'onglet se soulève (-translate-y-1),
+                    // s'éclaircit et gagne une ombre portée → invite tactile à le saisir.
+                    : 'text-foreground/55 hover:-translate-y-1 hover:text-foreground hover:brightness-110 hover:shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)]',
+                )}
+              >
+                {d.label}
+              </button>
+            )
+          })}
+        </div>
 
-      {entry ? (
-        <div className="space-y-4">
-          <p className="text-sm text-foreground">{entry.conseil}</p>
+        {/* Corps du dossier : grande carte pleine, même teinte que l'onglet actif → raccord
+            invisible. Tous coins arrondis (dossier doux), ombre portée douce. */}
+        <div
+          style={{ backgroundColor: folderFill }}
+          className="relative flex-1 rounded-3xl p-5 shadow-[0_22px_50px_-26px_rgb(0_0_0/0.7)]"
+        >
+          {/* key par domaine → le contenu fond en entrée à chaque changement d'onglet. */}
+          <div key={current.id} className="animate-in fade-in slide-in-from-bottom-1 duration-300">
+        {entry ? (
+          <div className="space-y-4">
+            {/* Conseil principal en callout inset (plus sombre que le fond lilas du dossier). */}
+            <p className="rounded-xl bg-card/60 px-4 py-3 text-sm leading-relaxed text-foreground">
+              {entry.conseil}
+            </p>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {entry.faire.length > 0 && (
-              <AdviceList title="À privilégier" tone="positive" items={entry.faire} />
-            )}
-            {entry.eviter.length > 0 && (
-              <AdviceList title="À éviter" tone="negative" items={entry.eviter} />
-            )}
+            <div className="grid gap-3 sm:grid-cols-2">
+              {entry.faire.length > 0 && (
+                <AdviceList title="À privilégier" tone="positive" items={entry.faire} />
+              )}
+              {entry.eviter.length > 0 && (
+                <AdviceList title="À éviter" tone="negative" items={entry.eviter} />
+              )}
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            Pas encore de conseils renseignés pour ce domaine ce jour-là.
+          </p>
+        )}
           </div>
         </div>
-      ) : (
-        <p className="text-sm text-muted-foreground">
-          Pas encore de conseils renseignés pour ce domaine ce jour-là.
-        </p>
-      )}
+      </div>
     </section>
   )
 }
@@ -77,16 +112,25 @@ function AdviceList({
   tone: 'positive' | 'negative'
   items: string[]
 }) {
-  const dot = tone === 'positive' ? 'var(--urgence-normal)' : 'var(--urgence-critique)'
+  const accent = tone === 'positive' ? 'var(--urgence-normal)' : 'var(--urgence-critique)'
   return (
-    <div className="space-y-2">
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</h3>
+    // Panneau tinté du ton (vert = à privilégier, rouge = à éviter) → lecture immédiate.
+    <div
+      className="space-y-2 rounded-xl p-3"
+      style={{
+        backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`,
+        border: `1px solid color-mix(in srgb, ${accent} 22%, transparent)`,
+      }}
+    >
+      <h3 className="text-xs font-semibold uppercase tracking-wide" style={{ color: accent }}>
+        {title}
+      </h3>
       <ul className="space-y-1.5">
         {items.map((item) => (
           <li key={item} className="flex items-start gap-2 text-sm text-foreground">
             <span
               className="mt-1.5 size-1.5 shrink-0 rounded-full"
-              style={{ backgroundColor: dot }}
+              style={{ backgroundColor: accent }}
             />
             {item}
           </li>
