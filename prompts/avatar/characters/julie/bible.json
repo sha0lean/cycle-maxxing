@@ -1,0 +1,119 @@
+{
+  "_README": "BIBLE IDENTITÉ — Julie. Surface d'édition (Remy parle, Claude édite). Le style/cadrage/negatives partagés vivent dans ../../_system/kit.json. Cette bible est COMPILÉE vers setup.md (le seul fichier uploadé dans ChatGPT). Les états sont des DELTAS : ils ne répètent jamais l'identité (portée par l'image master).",
+  "inherits": "../../_system/kit.json",
+  "meta": {
+    "character_id": "julie",
+    "version": "3.0.0",
+    "purpose": "anime wellness app avatar — full-pose state pack (one sprite per cycle state)",
+    "source_type": "canonical text-only character bible, no external visual reference required",
+    "render_goal": "consistent reusable avatar across 10 cycle states; identity locked, only expression/pose/props/body-state vary"
+  },
+  "identity": {
+    "name": "Julie",
+    "age_group": "young adult woman",
+    "overall_vibe": ["soft", "natural", "warm", "approachable", "wholesome", "feminine"],
+    "sexualization_baseline": "non-sexualized by default; the 'seductive' state (j13-14) is an explicit, scoped exception (mildly suggestive, still tasteful and clothed)"
+  },
+  "face": {
+    "shape": "soft square-oval face",
+    "jawline": "slightly square jawline softened in anime style",
+    "chin": "short rounded chin, not pointy",
+    "cheeks": "soft full cheeks with natural volume",
+    "cheek_details": "subtle cheek dimples when smiling",
+    "forehead": "natural medium-high forehead",
+    "face_width": "balanced face width with a slightly fuller lower face",
+    "structure_notes": ["avoid thin V-shaped face", "avoid narrow anime jaw", "avoid long narrow face", "avoid overly delicate doll-like face"]
+  },
+  "eyes": {
+    "color": "warm brown",
+    "shape": "soft almond eyes",
+    "size": "medium-large, expressive but not oversized",
+    "gaze": "gentle warm gaze",
+    "avoid": ["huge childish anime eyes", "cold sharp eyes", "blue eyes", "green eyes"]
+  },
+  "eyebrows": { "shape": "natural softly arched eyebrows", "thickness": "medium", "expression_base": "relaxed and expressive" },
+  "nose": { "shape": "small natural nose with soft bridge and rounded tip", "style": "simple anime nose, visible but minimal", "avoid": ["invisible tiny nose", "sharp pointed nose", "overly realistic nose"] },
+  "mouth": { "shape": "soft natural lips", "default_expression": "subtle closed-mouth smile", "avoid": ["tiny emotionless anime mouth", "overly glossy lips"] },
+  "skin": {
+    "tone": "fair warm skin tone",
+    "finish": "smooth anime skin with subtle warmth",
+    "details": ["slight natural rosy cheeks"],
+    "rule": "clean bare skin on legs and thighs. No tattoos, no writing, no marks, no body art."
+  },
+  "hair": {
+    "color": "warm champagne blonde to soft beige blonde",
+    "style": "very long loose wavy anime hair",
+    "texture": "silky smooth hair with natural S-shaped waves and soft flowing strands",
+    "length": "very long, flowing past the waist when visible",
+    "wave_level": "clearly wavy, soft and voluminous, not straight, not tight curls",
+    "face_visibility": "hair must frame the face without covering the eyes",
+    "brand_accessory": "wide lilac headband, clearly visible and consistent across all variants",
+    "avoid": ["brown hair", "dark chestnut hair", "orange blonde hair", "platinum white hair", "straight hair", "flat hair", "tight ringlet curls", "messy hair covering the face", "short hair"]
+  },
+  "ear_piercings": {
+    "description": "multiple ear piercings: several thin small hoops and tiny studs arranged around each ear",
+    "density": "many piercings, but delicate and lightweight — never cluttered or heavy",
+    "visibility": "clearly visible yet discreet, a subtle stack rather than a statement piece",
+    "avoid": ["large industrial piercings", "heavy gauges", "oversized hoops", "punk overload"]
+  },
+  "body": {
+    "silhouette": "soft curvy anime-inspired feminine silhouette, wholesome and app-friendly",
+    "overall_shape": "pear-hourglass hybrid: softly defined waist, gently wide hips, full soft thighs, balanced upper body",
+    "shoulders": "soft natural shoulders, slightly narrower than hips",
+    "bust": {
+      "base_size": "small natural bust",
+      "shape": "soft modest natural bust under a fitted cozy sweater",
+      "emphasis": "not emphasized, minimal projection, no cleavage, no boob-focused anatomy",
+      "cyclic_variation": "subtle swelling allowed in luteal/PMS only, but the bust must remain modest and never become medium-full, large, oversized, or sexualized"
+    },
+    "waist": { "shape": "naturally defined waist", "constraint": "visible waist curve but not tiny, not corset-like" },
+    "hips": { "shape": "gently wide rounded hips", "constraint": "wide enough to feel curvy, not extreme" },
+    "thighs": { "shape": "soft full thighs", "constraint": "not hypersexualized, not overly thick" },
+    "proportions": {
+      "upper_to_lower_balance": "lower body slightly fuller than upper body",
+      "sexualization_level": "none by default. Ovulation only: nipples faintly pointing through the sweater on 'confiante' (05, subtle) and clearly on 'seductive' (06, marked) — aroused but fully clothed, no exposed skin. Limited to these 2 states. 'seductive' also allows mildly suggestive posing."
+    },
+    "avoid": ["oversized breasts", "huge chest", "large cleavage", "boob-focused anatomy", "pin-up proportions in non-seductive states", "extreme hourglass figure", "tiny waist", "hyper-wide hips", "revealing outfit", "bodybuilder shoulders", "childlike body"]
+  },
+  "outfit": {
+    "top": "fitted pastel lilac ribbed knit mock-neck top",
+    "top_fit": "close-fitting on torso, waist and arms, lightly following the bust without emphasizing it",
+    "collar": "short soft standing mock-neck collar, slightly higher than crew neck, not a bulky turtleneck",
+    "fabric": "thin stretchy ribbed knit with subtle vertical rib texture",
+    "bottom": "short white pleated skirt with clean anime folds",
+    "socks": "white cotton knee-high socks, tight-fitting, smooth, rising below the knees",
+    "shoes": "white high-top Converse-style canvas sneakers",
+    "footwear_color_rule": "shoes and socks entirely white, clean and minimal",
+    "accessories": ["sneaky little flowers sometimes on the hair or top of the ears"],
+    "avoid": ["oversized sweater", "baggy sweater", "thick winter turtleneck", "loose shapeless top", "deep cleavage", "transparent fabric", "latex look", "beige leg warmers", "colored socks", "colored shoes", "boots"]
+  },
+  "locks": [
+    "face shape, jawline, chin, cheeks",
+    "eye shape + warm brown color",
+    "champagne blonde wavy hair + length + lilac headband",
+    "small modest bust + base body proportions + hip width",
+    "outfit: lilac ribbed mock-neck top + white pleated skirt + white knee-high socks + white high-top sneakers (NEVER changed, no added garments)",
+    "full-body framing + lighting family + background + art style"
+  ],
+  "negative_specific": [
+    "brown hair", "dark chestnut hair", "black hair", "orange blonde hair", "platinum white hair", "platinum blonde",
+    "straight hair", "flat hair", "tight ringlet curls", "frizzy curls", "messy hair covering eyes",
+    "blue eyes", "green eyes",
+    "oversized breasts", "huge chest", "large bust", "medium-full bust", "boob-focused anatomy", "pin-up anatomy", "exaggerated curves", "extreme hourglass body", "tiny waist", "hyper-wide hips",
+    "thin V-shaped face", "pointed chin", "narrow jaw",
+    "beige leg warmers", "colored socks", "colored shoes", "boots", "phone", "glasses", "different outfit"
+  ],
+  "states": [
+    { "id": "endolorie", "label_fr": "Endolorie", "phase": "ph1", "days": "j1-2", "expression": "épuisée, yeux mi-clos, sourcils légèrement froncés, bouche tombante, peau un peu pâle", "posture": "voûtée vers l'avant, épaules rentrées, une main pressée sur le bas-ventre (crampes)", "props": "une larme discrète au coin de l'œil", "lighting": "froide, douce, désaturée" },
+    { "id": "encore-tendre", "label_fr": "Encore tendre", "phase": "ph1", "days": "j3-4", "expression": "demi-sourire timide, regard qui s'adoucit", "posture": "commence à se déplier, épaules qui se relâchent", "props": "aucun", "lighting": "douce, encore un peu froide" },
+    { "id": "eveil", "label_fr": "Éveil", "phase": "ph2", "days": "j5-7", "expression": "regard qui s'allume, sourcils détendus", "posture": "dos qui se redresse", "props": "aucun", "lighting": "qui se réchauffe" },
+    { "id": "petillante", "label_fr": "Pétillante", "phase": "ph2", "days": "j8-11", "expression": "sourire ouvert, clin d'œil", "posture": "vive, légèrement rebondie", "props": "glow / sparkles qui scintillent", "lighting": "lumineuse et chaude" },
+    { "id": "confiante", "label_fr": "Confiante", "phase": "ph3", "days": "j12", "expression": "assurée, clin d'œil", "posture": "léger redressement, début de cambrure", "props": "aucun (nipples faiblement marqués sous le pull, subtil)", "lighting": "chaude" },
+    { "id": "seductrice", "label_fr": "Séductrice", "phase": "ph3", "days": "j13-14", "expression": "rougie, regard intense presque agressif", "posture": "bien cambrée, léger balancement (sway)", "props": "cœurs qui flottent (nipples nettement marqués sous le pull)", "lighting": "chaude qui pulse", "sexualization_override": true },
+    { "id": "apaisee", "label_fr": "Apaisée", "phase": "ph4a", "days": "j15-17", "expression": "rêveuse, paisible, casanière", "posture": "détendue", "props": "chocolat en main / mug", "lighting": "douce et chaude" },
+    { "id": "melancolique", "label_fr": "Mélancolique", "phase": "ph4a", "days": "j18-20", "expression": "regard qui s'éteint, mélancolique", "posture": "molle, épaules basses", "props": "aucun ; léger gonflement seins/ventre", "lighting": "douce qui s'éteint" },
+    { "id": "a-cran", "label_fr": "À cran", "phase": "ph4b", "days": "j21-23", "expression": "irritée, sourcils tendus", "posture": "tendue, poing serré sur la hanche", "props": "veines de colère anime (pop-veins) ; corps un peu gonflé", "lighting": "dense" },
+    { "id": "a-fleur-de-peau", "label_fr": "À fleur de peau", "phase": "ph4b", "days": "j24-27", "expression": "larmes et colère mêlées", "posture": "repliée, bouillotte contre le ventre", "props": "bouillotte + mouchoir + pop-veins ; gonflement max", "lighting": "faible et tremblante" }
+  ],
+  "state_negative_note": "État 06 (séductrice) lève les bans de pose pin-up pour permettre une cambrure suggestive, mais GARDE nudity / topless / nipples exposed / explicit / revealing-outfit / oversized-breast."
+}

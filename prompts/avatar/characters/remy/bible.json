@@ -1,0 +1,25 @@
+{
+  "_README": "BIBLE IDENTITÉ — Remy (Easter egg). Reprend les MÊMES états/poses que Julie via le toggle. Remplis les TODO (parle à Claude, il édite). Style/cadrage hérités de ../../_system/kit.json. Compilé vers setup.md.",
+  "inherits": "../../_system/kit.json",
+  "meta": {
+    "character_id": "remy",
+    "version": "0.1.0",
+    "purpose": "avatar Easter egg — toggle sur Remy, reprend les poses/états de Julie",
+    "source_type": "canonical text-only character bible, no external visual reference required",
+    "render_goal": "TODO"
+  },
+  "identity": { "name": "Remy", "age_group": "adult man", "overall_vibe": ["TODO"], "sexualization_baseline": "non-sexualized" },
+  "face": { "shape": "TODO", "jawline": "TODO", "chin": "TODO", "cheeks": "TODO", "structure_notes": [] },
+  "eyes": { "color": "TODO", "shape": "TODO", "gaze": "TODO", "avoid": [] },
+  "eyebrows": { "shape": "TODO", "thickness": "TODO" },
+  "nose": { "shape": "TODO", "avoid": [] },
+  "mouth": { "shape": "TODO", "default_expression": "TODO", "avoid": [] },
+  "skin": { "tone": "TODO", "finish": "TODO", "rule": "clean bare skin, no tattoos unless specified" },
+  "hair": { "color": "TODO", "style": "TODO", "texture": "TODO", "length": "TODO", "avoid": [] },
+  "facial_hair": { "style": "TODO — barbe courte / rasé / bouc", "avoid": [] },
+  "body": { "silhouette": "TODO", "shoulders": "TODO", "avoid": [] },
+  "outfit": { "top": "TODO", "bottom": "TODO", "socks": "TODO", "shoes": "TODO", "accessories": [], "avoid": [] },
+  "locks": ["TODO — ce qui ne doit jamais changer"],
+  "negative_specific": ["TODO — bans propres à toi"],
+  "states": []
+}

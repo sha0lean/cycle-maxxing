@@ -1,0 +1,26 @@
+{
+  "_README": "SQUELETTE PERSO. Copie dans characters/<nom>/bible.json puis remplis (ou laisse Claude le faire). NE mets PAS de style/cadrage ici : hérités de _system/kit.json. Cette bible est compilée vers setup.md (le seul fichier uploadé dans ChatGPT). Les états sont des DELTAS — jamais l'identité (portée par l'image master).",
+  "inherits": "../../_system/kit.json",
+  "meta": {
+    "character_id": "<slug>",
+    "version": "0.1.0",
+    "purpose": "<à quoi sert cet avatar>",
+    "source_type": "canonical text-only character bible, no external visual reference required",
+    "render_goal": "<objectif>"
+  },
+  "identity": { "name": "<Prénom>", "age_group": "<ex. young adult>", "overall_vibe": [], "sexualization_baseline": "non-sexualized by default" },
+  "face": { "shape": "", "jawline": "", "chin": "", "cheeks": "", "structure_notes": [] },
+  "eyes": { "color": "", "shape": "", "gaze": "", "avoid": [] },
+  "eyebrows": { "shape": "", "thickness": "" },
+  "nose": { "shape": "", "avoid": [] },
+  "mouth": { "shape": "", "default_expression": "", "avoid": [] },
+  "skin": { "tone": "", "finish": "", "rule": "clean bare skin, no tattoos unless specified" },
+  "hair": { "color": "", "style": "", "texture": "", "length": "", "face_visibility": "", "brand_accessory": "", "avoid": [] },
+  "body": { "silhouette": "", "shoulders": "", "proportions": {}, "avoid": [] },
+  "outfit": { "top": "", "bottom": "", "socks": "", "shoes": "", "accessories": [], "avoid": [] },
+  "locks": ["<ce qui ne doit jamais changer entre les sprites>"],
+  "negative_specific": ["<bans propres au perso : mauvaise couleur cheveux/yeux, etc.>"],
+  "states": [
+    { "id": "<slug>", "label_fr": "<Nom>", "expression": "", "posture": "", "props": "", "lighting": "" }
+  ]
+}

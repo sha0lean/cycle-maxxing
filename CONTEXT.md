@@ -20,6 +20,10 @@
 - **Claim en suspens** : claim qui n'a pas été appliqué (capé, modifié ou refusé) pour une raison documentée — incohérence de progression, pas assez de preuves, conflit avec une source de meilleur niveau. Stocké dans data/pending-claims.md. Réactivable si un futur article le corrobore avec un poids combiné suffisant.
 - **Portée** : étendue temporelle couverte par un claim — cycle entier, phase, ou sous-phase. Quand deux claims couvrent le même signal+capteur, le plus précis (sous-phase) prend la priorité sur sa plage ; le moins précis couvre les plages non encore adressées.
 - **Wiki** : encyclopédie intégrée à l'app composée de fiches capteur, fiches signal et fiches source, reliées par backlinks bidirectionnels.
+- **Avatar** : représentation anime d'une personne (Julie, ou Remy en Easter egg) affichée dans l'app, déclinée en sprites selon l'état du cycle.
+- **Image master** : image de référence figée d'un avatar, en pose neutre, dont dérivent tous les sprites — gabarit d'identité, d'échelle et de cadrage.
+- **Sprite** : image d'un état de l'avatar, alignée sur l'image master (même baseline, même échelle) pour permettre l'animation par fondu entre états.
+- **État (d'avatar)** : variante émotionnelle et posturale de l'avatar associée à un moment du cycle (ex. Endolorie, À cran). Ne change que l'expression, la posture, les props et la lumière — jamais l'identité.
 
 ---
 

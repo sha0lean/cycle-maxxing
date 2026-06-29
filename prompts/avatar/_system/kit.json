@@ -1,0 +1,47 @@
+{
+  "_README": "KIT PARTAGÉ — style + cadrage + negatives communs à TOUS les persos. Réglé une fois, jamais ouvert au quotidien. Pour porter le système dans un autre projet : copie tout prompts/avatar/ et adapte SEULEMENT ce fichier. Le compilateur de setup.md lit ici.",
+  "style": {
+    "art_style": "2D anime illustration",
+    "rendering": "soft cel-shading",
+    "line_art": "clean delicate line art",
+    "palette": "muted pastel lilac with soft warm tones",
+    "lighting": "soft warm studio lighting",
+    "mood": "cozy wholesome wellness app aesthetic",
+    "background": "plain uniform light-gray studio backdrop",
+    "quality": "clean polished app-ready asset",
+    "style_line": "2D anime illustration, soft cel-shading, clean delicate line art, muted pastel lilac palette, cozy wholesome wellness app aesthetic, soft warm lighting."
+  },
+  "framing": {
+    "composition": "full-body standing character reference, visible from head to shoes",
+    "camera_angle": "front-facing with slight natural three-quarter body angle",
+    "rules": {
+      "character_centered": true,
+      "full_head_visible": true,
+      "full_body_visible": true,
+      "shoes_visible": true,
+      "no_crop": true,
+      "portrait_format": true
+    },
+    "avoid": ["mid-thigh crop", "knees-up framing", "bust portrait", "cropped shoes", "cropped legs", "cropped head", "camera tilt changes"]
+  },
+  "sprite_alignment": {
+    "purpose": "all variants must align as sprites for smooth animation",
+    "canvas": { "orientation": "portrait", "recommended_ratio": "2:3", "recommended_size": "1024x1536" },
+    "position_locks": {
+      "character_center_x": "exactly centered on canvas vertical axis",
+      "feet_baseline": "same vertical position across all variants",
+      "top_of_hair": "same upper margin across all variants",
+      "body_scale": "same height and width across all variants",
+      "camera": "same front-facing slight three-quarter camera angle"
+    },
+    "allowed_changes": ["facial expression", "eyebrows", "eyes", "mouth", "blush", "tears", "small emotional props", "subtle posture / hands"],
+    "forbidden_changes": ["different canvas size", "different character scale", "different feet position", "different head position", "different camera angle", "cropped body", "cropped shoes", "different outfit", "different hairstyle", "different body proportions"]
+  },
+  "variant_preamble": "Use the MASTER image as the strict reference for identity, scale, pose base, framing, outfit, hairstyle and alignment. Preserve: same canvas size, same character centerline, same feet baseline, same head position, same body scale, same camera angle, same outfit, same hairstyle, same hair length, same background, same lighting family. Only change: facial expression, eyebrow tension, eye openness, mouth shape, blush/tears, subtle hand/arm variation if requested, small emotional props if requested. Do not move the character on the canvas, do not change the full-body framing, do not crop, do not resize.",
+  "negative_core": [
+    "photorealism", "3d render", "low quality", "blurry", "jpeg artifacts", "text", "watermark", "signature",
+    "cropped head", "cropped shoes", "cropped body", "cropped legs", "camera tilt changes",
+    "extra limbs", "missing limbs", "deformed hands", "fused fingers", "malformed anatomy",
+    "nudity", "revealing outfit", "transparent fabric", "latex", "tattoos", "body art", "writing on skin", "marks on legs"
+  ]
+}

@@ -16,6 +16,7 @@
 - [D_005](#d_005) — Coefficients signal→capteur phase-dépendants à raffinement progressif (2026-06-25)
 - [D_006](#d_006) — Données data/*.md consommées via codegen au build (2026-06-25)
 - [D_007](#d_007) — Provenance par fichier source ; vue inverse différée au Wiki (2026-06-25)
+- [D_008](#d_008) — Avatars : génération hors-repo, source compilée en un seul setup.md (2026-06-29)
 
 ---
 
@@ -114,3 +115,17 @@
 | **justification** | La provenance par fichier source rend chaque article auditable et réactivable isolément, et constitue la **brique de backlink du futur Wiki**. Matérialiser un index inverse par capteur dès maintenant (2 sources) serait de la sur-ingénierie et un second endroit à garder synchrone. |
 | **alternatives** | Index central de provenance par capteur — utile à grande échelle mais redondant et fragile (double source de vérité) tant que le volume est faible. Historique inline dans `phase-reference.md` — pollue la couche quantitative et casse le codegen/parsing. Fusionner plusieurs articles par fichier — détruit les backlinks et l'auditabilité par source. |
 | **conséquences** | L'audit d'une valeur de capteur passe aujourd'hui par un grep des fichiers sources ; le Wiki (backlog `[?]`) portera la vue inverse. Les dumps de recherche groupés (`data/sources/_research-*.md`, préfixe `_`) sont tolérés comme matière qualitative **hors-système**, à éclater en fichiers individuels au moment de l'ingestion. |
+
+---
+
+### D_008
+**Avatars : génération hors-repo, source compilée en un seul `setup.md`**
+
+*29 juin 2026 — 05:51*
+
+| | |
+|---|---|
+| **décision** | La génération d'images d'avatar se fait **hors-repo** (ChatGPT/Projets), pas dans Claude Code. Le repo (`prompts/avatar/`) stocke **2 fichiers par perso** : `bible.json` (identité structurée, surface d'édition de Claude) + `setup.md` (sortie compilée : master prompt + negative + identité figée + alignement sprite + table des états). Un `_system/kit.json` partagé porte style + cadrage + negatives. Les **états sont des deltas** (expression/posture/props/lumière) — ils ne répètent jamais l'identité, portée par l'**image master** générée une fois et servant de gabarit fixe. Frontière : un tweak **éphémère** (pose d'un shot) se fait direct dans ChatGPT et n'est jamais persisté ; un changement **canonique** passe par `bible.json` → recompile `setup.md` → re-upload. |
+| **justification** | L'outil de génération vit en ligne et n'accepte pas de pipeline ; le seul levier est « setup une fois, puis prompts courts ». Un fichier compilé unique par perso supprime la répétition (ré-uploader une seule carte d'identité), et le JSON-source garde les overrides traçables (cf. saga cheveux/poitrine). Les états-deltas évitent la duplication d'identité qui rendait les anciens fichiers d'état périmés et contradictoires. |
+| **alternatives** | **6 prompts-extracteurs** (`extract-style`, `extract-bible`…) — sur-ingénierie : l'extraction se fait en conversation, ces fichiers étaient de la doc d'un process déjà naturel. **Markdown unique éditable à la main** — perd la rigueur des overrides/negatives (3 endroits à synchroniser). **10 fichiers d'état autonomes** répétant l'identité — duplication + dérive (chaque fichier re-décrivait cheveux/tenue, et tous étaient périmés). **Sorties éclatées** (`master-prompt.txt` + `negative.txt` séparés) — multipliait les fichiers à uploader. |
+| **conséquences** | Claude édite `bible.json` et **recompile** `setup.md` à la demande ; l'utilisateur n'ouvre jamais le JSON ni `kit.json`. Tout nouveau perso = copie de `_template/bible.template.json`. Le kit est **portable** : copier `prompts/avatar/` dans un autre projet, n'adapter que `kit.json`. Pas de codegen automatisé (compilation manuelle par Claude, YAGNI tant qu'il n'y a que 1-2 persos). |
