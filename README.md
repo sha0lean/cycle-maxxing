@@ -1,5 +1,21 @@
 # Cycle Maxxing
 
+---
+
+Le **Data Fabric** est un squelette documentaire qui s'articule autour de 3 piliers :
+le **backlog** (`docs/06-backlog.md`), le **journal des décisions**
+(`docs/07-decisions-log.md`) et les **sessions** (`todo/`, `zarchives/`)
+
+| Pilier | Chemin | Rôle |
+|--------|--------|------|
+| Backlog | `docs/06-backlog.md` | Ce qu'on va faire, priorisé et daté |
+| Décisions | `docs/07-decisions-log.md` | Pourquoi on l'a fait (ADR) |
+| Documentation | `docs/` | Vision, science du cycle, features UX, design system, modèle de données |
+| Sessions | `todo/` · `zarchives/` | Travail en cours et passé |
+| Règles d'exécution | `CLAUDE.md` | Instructions pour les agents |
+
+---
+
 Dashboard web personnel pour suivre et comprendre le cycle menstruel de Julie.
 
 ## Vision
