@@ -1,23 +1,27 @@
 'use client'
 
 // Avatar PNJ de Julie au centre du dashboard (style « character sheet »).
-// L'émotion suit le bien-être du jour (wellbeingScore), l'aura suit la phase du cycle.
-// v1 = PLACEHOLDER : grand emoji + halo. Les vrais PNG détourés se branchent ici
-//   en remplaçant le bloc emoji par <img src={`/avatars/julie-${mood.id}.png`} />.
+// L'état affiché suit le JOUR du cycle (10 états, cf. lib/avatar.ts) ; l'aura suit la phase ;
+// le score de bien-être module le badge « Forme » (et, plus tard, l'intensité des micro-anims).
+// Chaque état charge public/avatars/julie-<id>.webp ; tant que le fichier n'existe pas, on retombe
+// sur l'emoji de l'état (aucun broken-image, et le vrai sprite apparaît dès qu'on dépose le fichier).
 
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
-import { wellbeingScore, scoreToMood } from '@/lib/wellbeing'
+import { wellbeingScore } from '@/lib/wellbeing'
+import { dayToAvatarState, type AvatarState } from '@/lib/avatar'
 import { PHASE_COLOR_VAR, PHASE_LABELS } from '@/lib/labels'
 import type { Metrics, PhaseId } from '@/lib/types'
 
 type CharacterAvatarProps = {
   metrics: Metrics
   phase: PhaseId
+  day: number // jour du cycle → choisit l'état (1 des 10)
 }
 
-export function CharacterAvatar({ metrics, phase }: CharacterAvatarProps) {
+export function CharacterAvatar({ metrics, phase, day }: CharacterAvatarProps) {
   const score = wellbeingScore(metrics)
-  const mood = scoreToMood(score)
+  const state = dayToAvatarState(day)
   const auraColor = PHASE_COLOR_VAR[phase]
 
   return (
@@ -28,33 +32,21 @@ export function CharacterAvatar({ metrics, phase }: CharacterAvatarProps) {
       </h2>
 
       {/* Scène de l'avatar : aura de phase (derrière) + personnage (devant). */}
-      <div className="relative flex h-56 w-56 items-center justify-center">
+      <div className="relative flex h-72 w-full items-center justify-center">
         {/* Aura : halo radial coloré par la phase, pulse lent → impression de vie. */}
         <div
           aria-hidden
-          className="avatar-aura absolute inset-0 rounded-full blur-2xl"
+          className="avatar-aura absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl"
           style={{
             background: `radial-gradient(circle at center, color-mix(in srgb, ${auraColor} 70%, transparent), transparent 70%)`,
           }}
         />
 
-        {/* Placeholder émotion : grand emoji flottant. key={mood.id} → crossfade au changement
-            de jour/score. Remplacer ce bloc par l'<img> du PNG détouré le moment venu. */}
-        <div
-          key={mood.id}
-          className="avatar-float animate-in fade-in zoom-in-95 relative flex size-40 items-center justify-center rounded-full duration-500"
-          style={{
-            background: `color-mix(in srgb, ${auraColor} 16%, var(--card))`,
-            boxShadow: `inset 0 1px 0 0 color-mix(in srgb, white 8%, transparent), 0 18px 40px -20px ${auraColor}`,
-          }}
-        >
-          <span className="text-7xl leading-none" role="img" aria-label={mood.label}>
-            {mood.emoji}
-          </span>
-        </div>
+        {/* key={state.id} → remonte la figure au changement d'état : crossfade + nouvelle tentative de chargement PNG. */}
+        <AvatarFigure key={state.id} state={state} auraColor={auraColor} />
       </div>
 
-      {/* Bandeau d'état : forme du jour (score) + libellé d'humeur + phase. */}
+      {/* Bandeau d'état : forme du jour (score) + libellé d'état + phase. */}
       <div className="flex flex-col items-center gap-1">
         <div
           className="flex items-center gap-2 rounded-full px-4 py-1.5"
@@ -65,12 +57,45 @@ export function CharacterAvatar({ metrics, phase }: CharacterAvatarProps) {
         >
           <span className="text-sm font-medium text-muted-foreground">Forme</span>
           <span className="font-mono text-lg font-bold tabular-nums text-foreground">{score}</span>
-          <span className="text-lg leading-none">{mood.emoji}</span>
+          <span className="text-lg leading-none">{state.emoji}</span>
         </div>
         <p className={cn('text-sm font-medium', 'text-foreground/80')}>
-          {mood.label} · <span className="text-muted-foreground">{PHASE_LABELS[phase]}</span>
+          {state.label} · <span className="text-muted-foreground">{PHASE_LABELS[phase]}</span>
         </p>
       </div>
     </div>
+  )
+}
+
+// Le sprite de l'état. PNG détouré en pied si présent, sinon repli emoji dans un médaillon.
+function AvatarFigure({ state, auraColor }: { state: AvatarState; auraColor: string }) {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return (
+      <div
+        className="avatar-float animate-in fade-in zoom-in-95 relative flex size-40 items-center justify-center rounded-full duration-500"
+        style={{
+          background: `color-mix(in srgb, ${auraColor} 16%, var(--card))`,
+          boxShadow: `inset 0 1px 0 0 color-mix(in srgb, white 8%, transparent), 0 18px 40px -20px ${auraColor}`,
+        }}
+      >
+        <span className="text-7xl leading-none" role="img" aria-label={state.label}>
+          {state.emoji}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    // <img> natif (pas next/image) : sprite qui change souvent, fond transparent, repli onError.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/avatars/julie-${state.id}.webp`}
+      alt={state.label}
+      onError={() => setFailed(true)}
+      className="avatar-float animate-in fade-in zoom-in-95 relative h-full w-auto object-contain duration-500"
+      style={{ filter: `drop-shadow(0 18px 30px color-mix(in srgb, ${auraColor} 45%, transparent))` }}
+    />
   )
 }
