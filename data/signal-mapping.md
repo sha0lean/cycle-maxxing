@@ -144,6 +144,19 @@
 - type : inférée
 - source_initiale : granda2021
 
+### prostaglandines élevées
+> Pic de prostaglandines (PGF2α) au déclenchement des règles → hypercontractilité utérine, crampes. Cause directe de la dysménorrhée primaire (mesurée haute chez les femmes dysménorrhéiques). Distincte de la migraine cataméniale (chute d'œstrogène) — douleur pelvienne, pas céphalée.
+- énergie      : -3
+- humeur       : -2
+- libido       : 0
+- fatigue      : +3
+- sensibilité  : 0
+- stress       : 0
+- douleurs     : +15
+- irritabilité : +2
+- type : directe
+- source_initiale : cochrane-cd001751
+
 ---
 
 ## Signaux à documenter (identifiés, pas encore mappés)

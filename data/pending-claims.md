@@ -14,6 +14,7 @@
 - [granda2021-inflammation-j24j27](#granda2021-inflammation-j24j27) — capé 2026-06-25
 - [mcnulty2020-performance-folliculaire](#mcnulty2020-performance-folliculaire) — refusé 2026-06-25
 - [tan2020-douleur-experimentale](#tan2020-douleur-experimentale) — refusé 2026-06-25
+- [cochrane-cd001751-prostaglandines-douleurs-j1j2](#cochrane-cd001751-prostaglandines-douleurs-j1j2) — capé 2026-07-02
 
 ---
 
@@ -121,3 +122,19 @@
 - raison : résultats contradictoires reconnus par les auteurs eux-mêmes — pas de consensus sur l'effet du cycle sur la douleur expérimentale. Ne pas générer de pics de douleur en folliculaire/ovulation sans historique utilisateur.
 - poids_source : 0.2
 - corroboration_requise : 0.7 (source niveau 1-2 établissant une direction claire) pour reconsidérer.
+
+---
+
+### cochrane-cd001751-prostaglandines-douleurs-j1j2
+**prostaglandines élevées → douleurs j1-j2 (Règles début)**
+
+- date_suspension : 2026-07-02
+- signal : prostaglandines élevées
+- capteur : douleurs
+- sous-phase : j1-j2
+- delta_proposé : +15 (78 → 93)
+- delta_appliqué : +7 (capé à 85)
+- delta_suspendu : +8
+- raison : cap structurel — douleurs j1-j2 déjà quasi-pic (78). Un delta brut +15 saturerait l'échelle et écraserait la hiérarchie de douleur du cycle. Cap à 85 pour préserver la crédibilité de la courbe. NB : j3-j4 non capé (+10 appliqué, plus de marge).
+- poids_source : 1.0
+- corroboration_requise : non applicable — cap structurel, pas un déficit de preuve. Le surplus ne sera levé que si l'échelle de douleurs est recalibrée vers le haut.

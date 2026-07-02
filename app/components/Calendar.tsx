@@ -6,7 +6,6 @@
 import { useEffect, useState } from 'react'
 import { monthMatrix } from '@/lib/calendar'
 import { DayPanel } from '@/components/DayPanel'
-import { ViewToggle, type MainView } from '@/components/ViewToggle'
 import { PHASE_COLOR_VAR } from '@/lib/labels'
 import { cn } from '@/lib/utils'
 import { wrapCycleDay } from '@/lib/cycle'
@@ -22,13 +21,11 @@ type CalendarProps = {
   cycles: CycleEntry[]
   todayDay: number
   logs: DayLog[]
-  view: MainView
-  onViewChange: (v: MainView) => void
   onDayChange: (day: number) => void // remonte le jour sélectionné vers la navbar
   onSaveMetrics: (day: number, partial: Partial<Metrics>) => void
 }
 
-export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChange, onSaveMetrics }: CalendarProps) {
+export function Calendar({ cycles, todayDay, logs, onDayChange, onSaveMetrics }: CalendarProps) {
   const today = new Date()
   const [cursor, setCursor] = useState({ year: today.getFullYear(), month: today.getMonth() })
   const [selectedDay, setSelectedDay] = useState(wrapCycleDay(todayDay))
@@ -47,18 +44,9 @@ export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChan
       return { year: c.year + Math.floor(m / 12), month: ((m % 12) + 12) % 12 }
     })
 
-  return (
-    <div className="space-y-6">
-      <DayPanel displayDay={selectedDay} logs={logs} onSaveMetrics={onSaveMetrics} />
-
-      <section className="panel">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Frise du cycle
-          </h2>
-          <ViewToggle view={view} onChange={onViewChange} />
-        </div>
-
+  // Grille mensuelle : occupe la rangée haute-droite du Dashboard (slot `aside`), à côté des stats.
+  const grid = (
+    <section className="panel">
         <header className="mb-4 flex items-center justify-between">
           <button
             type="button"
@@ -134,6 +122,7 @@ export function Calendar({ cycles, todayDay, logs, view, onViewChange, onDayChan
           ))}
         </div>
       </section>
-    </div>
   )
+
+  return <DayPanel displayDay={selectedDay} logs={logs} onSaveMetrics={onSaveMetrics} aside={grid} />
 }

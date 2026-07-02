@@ -12,7 +12,7 @@ energie · humeur · libido · fatigue · sensibilite · stress · douleurs · i
 
 ### j1-j2 — Début
 ```
-energie:25  humeur:30  libido:6   fatigue:92  sensibilite:70  stress:44  douleurs:78  irritabilite:33
+energie:23  humeur:28  libido:6   fatigue:94  sensibilite:70  stress:44  douleurs:85  irritabilite:35
 ```
 - urgence: attention
 - keywords: fatigue profonde · crampes · introspection · besoin de chaleur
@@ -21,7 +21,7 @@ energie:25  humeur:30  libido:6   fatigue:92  sensibilite:70  stress:44  douleur
 
 ### j3-j4 — Fin
 ```
-energie:36  humeur:47  libido:17  fatigue:68  sensibilite:52  stress:32  douleurs:40  irritabilite:20
+energie:33  humeur:45  libido:17  fatigue:71  sensibilite:52  stress:32  douleurs:50  irritabilite:22
 ```
 - urgence: attention
 - keywords: fatigue décroissante · légère reprise · encore introvertie

@@ -1,10 +1,12 @@
 // Vue principale — présentationnelle : tout vient des props, l'état vit dans CycleApp.
-// Layout « character sheet » : avatar PNJ de Julie à gauche, stats au centre, conseils à droite.
-// Les infos jour/phase/sous-phase sont portées par la navbar (CycleNav), pas ici.
+// Grille en L (« Éphéméride corporelle ») : Julie plein pied à gauche (pleine hauteur),
+// zone droite = rangée haute (stats sans fond | compagnon frise/calendrier) puis conseils
+// pleine largeur dessous. Les infos jour/phase sont portées par le bandeau (CycleNav).
 
+import type { ReactNode } from 'react'
 import { MetricsPanel } from '@/components/MetricsPanel'
 import { CharacterAvatar } from '@/components/CharacterAvatar'
-import { DomainTabs } from '@/components/DomainTabs'
+import { AdvicePanel } from '@/components/AdvicePanel'
 import type { DayInfo, Metrics } from '@/lib/types'
 import type { ResolvedDomain } from '@/lib/domain-loader'
 
@@ -13,31 +15,34 @@ type DashboardProps = {
   hasPersonal: boolean
   domains: ResolvedDomain[]
   onSaveMetrics: (partial: Partial<Metrics>) => void
+  // Compagnon de la rangée haute-droite : la frise (vue Cycle) ou la grille (Calendrier).
+  aside: ReactNode
 }
 
-export function Dashboard({ info, hasPersonal, domains, onSaveMetrics }: DashboardProps) {
+export function Dashboard({ info, hasPersonal, domains, onSaveMetrics, aside }: DashboardProps) {
   return (
-    // 3 colonnes en desktop (avatar / stats / conseils). lg:items-stretch → toutes les colonnes
-    // adoptent la hauteur de la rangée ; le panneau Conseils descend ainsi jusqu'en bas.
+    // items-stretch → la colonne avatar adopte la hauteur totale de la zone droite (plein pied).
     // En mobile : empilé, avatar en tête (order naturel du DOM).
-    <div className="grid items-start gap-6 lg:grid-cols-[3fr_4fr_5fr] lg:items-stretch">
-      {/* Avatar : 1er dans le DOM (→ haut en mobile), placé à gauche et recentré en hauteur sur desktop. */}
-      <div className="lg:order-1 lg:self-center">
-        <CharacterAvatar metrics={info.displayMetrics} phase={info.phase} day={info.dayNumber} />
+    <div className="grid gap-6 lg:grid-cols-[minmax(260px,23rem)_1fr] lg:items-stretch">
+      {/* Avatar : 1er dans le DOM (→ haut en mobile), colonne gauche pleine hauteur en desktop. */}
+      <div className="min-w-0">
+        <CharacterAvatar phase={info.phase} day={info.dayNumber} />
       </div>
 
-      {/* Stats : hauteur naturelle (self-start) → pas étirée inutilement par la rangée. */}
-      <div className="lg:order-2 lg:self-start">
-        <MetricsPanel
-          display={info.displayMetrics}
-          reference={info.referenceMetrics}
-          hasPersonal={hasPersonal}
-          onSaveMetrics={onSaveMetrics}
-        />
-      </div>
-
-      <div className="lg:order-3">
-        <DomainTabs domains={domains} />
+      {/* Zone droite : rangée haute (stats | compagnon), rangée basse (conseils pleine largeur). */}
+      <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,3.3fr)] lg:grid-rows-[auto_minmax(0,1fr)]">
+        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+          <MetricsPanel
+            display={info.displayMetrics}
+            reference={info.referenceMetrics}
+            hasPersonal={hasPersonal}
+            onSaveMetrics={onSaveMetrics}
+          />
+        </div>
+        <div className="min-w-0 lg:col-start-2 lg:row-start-1">{aside}</div>
+        <div className="min-w-0 lg:col-span-2 lg:row-start-2">
+          <AdvicePanel domains={domains} dayNumber={info.dayNumber} />
+        </div>
       </div>
     </div>
   )

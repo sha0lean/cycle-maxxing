@@ -7,10 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-inter);
-  --font-display: var(--font-fraunces);
+  --font-heading: var(--font-geist);
+  --font-display: var(--font-instrument);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -19,11 +19,13 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  /* Couleurs d'hormones : tokens --hormone-* générés depuis lib/hormone-theme.ts
+     (source de vérité unique, injectée par <HormoneThemeStyle>). */
+  --color-hormone-oestrogene: var(--hormone-oestrogene);
+  --color-hormone-progesterone: var(--hormone-progesterone);
+  --color-hormone-lh: var(--hormone-lh);
+  --color-hormone-fsh: var(--hormone-fsh);
+  --color-hormone-bbt: var(--hormone-bbt);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -79,11 +81,7 @@
   --border: #e2daef;
   --input: #e2daef;
   --ring: #8b6fd4;
-  --chart-1: #0891b2; /* œstrogène — cyan */
-  --chart-2: #e11d48; /* progestérone — rose */
-  --chart-3: #ca8a04; /* LH — jaune/ambre */
-  --chart-4: #16a34a; /* FSH — vert */
-  --chart-5: #9333ea; /* BBT — violet */
+  /* Couleurs d'hormones : cf. lib/hormone-theme.ts (tokens --hormone-* injectés au runtime). */
   --radius: 0.375rem; /* ÷2 (était 0.75rem) → coins moins ronds, plus carrés partout */
   --phase-regles: #e11d6a;
   --phase-folliculaire: #0284c7;
@@ -103,63 +101,56 @@
   --sidebar-ring: #8b6fd4;
 }
 
-/* Dark — défaut (docs/04) */
+/* Dark — défaut · « Éphéméride corporelle » : nuit chaude prune (tire rouge, jamais bleu-froid).
+   Le corps est chaud, hormonal, vivant → le fond l'est aussi. Accent = ember groseille. */
 .dark {
-  --background: #0f0d1a;
-  --foreground: #f0edf8;
-  --card: #1a1625;
-  --card-foreground: #f0edf8;
-  --popover: #1a1625;
-  --popover-foreground: #f0edf8;
-  --primary: #c5b3f5;
-  --primary-foreground: #0f0d1a;
-  --secondary: #221e30;
-  --secondary-foreground: #f0edf8;
-  --muted: #221e30;
-  --muted-foreground: #9b95b0;
-  --accent: #221e30;
-  --accent-foreground: #f0edf8;
+  --background: #1b0e15; /* prune-noir chaud */
+  --foreground: #f5e9ec; /* blanc rosé */
+  --card: #271620; /* surface élevée */
+  --card-foreground: #f5e9ec;
+  --popover: #271620;
+  --popover-foreground: #f5e9ec;
+  --primary: #e8506b; /* ember — groseille corporelle, l'accent « en direct » */
+  --primary-foreground: #2a0e16;
+  --secondary: #2e1922;
+  --secondary-foreground: #f5e9ec;
+  --muted: #2e1922;
+  --muted-foreground: #a48d97; /* mauve-gris chaud */
+  --accent: #2e1922;
+  --accent-foreground: #f5e9ec;
   --destructive: #f0908a;
-  --border: #2e2845;
-  --input: #2e2845;
-  --ring: #c5b3f5;
-  --chart-1: #22d3ee; /* œstrogène — cyan */
-  --chart-2: #fb7185; /* progestérone — rose */
-  --chart-3: #facc15; /* LH — jaune */
-  --chart-4: #4ade80; /* FSH — vert */
-  --chart-5: #c084fc; /* BBT — violet */
-  --phase-regles: #ff5d8f;
-  --phase-folliculaire: #38bdf8;
-  --phase-ovulation: #a855f7;
-  --phase-luteale: #fb923c;
-  --phase-spm: #f87171;
-  --urgence-normal: #1d9e75;
+  --border: #3a2430; /* liseré chaud */
+  --input: #3a2430;
+  --ring: #e8506b;
+  /* Couleurs d'hormones : cf. lib/hormone-theme.ts (tokens --hormone-* injectés au runtime). */
+  /* Roue des 5 phases : distincte pour la lecture, mais assise sur la nuit chaude. */
+  --phase-regles: #f0577e; /* rose-groseille — le sang */
+  --phase-folliculaire: #5ac8d8; /* turquoise — renouveau, la seule fraîcheur */
+  --phase-ovulation: #e8b84b; /* or — le pic, éclatant */
+  --phase-luteale: #d76233; /* terracotta profond — creusé vs l'or de l'ovulation */
+  --phase-spm: #9d3a5d; /* prune-framboise sombre — tranche par la teinte (violacée) et la luminosité vs le rose des règles */
+  --urgence-normal: #3fae82;
   --urgence-attention: #ef9f27;
   --urgence-critique: #e24b4a;
-  --sidebar: #1a1625;
-  --sidebar-foreground: #f0edf8;
-  --sidebar-primary: #c5b3f5;
-  --sidebar-primary-foreground: #0f0d1a;
-  --sidebar-accent: #221e30;
-  --sidebar-accent-foreground: #f0edf8;
-  --sidebar-border: #2e2845;
-  --sidebar-ring: #c5b3f5;
+  --sidebar: #271620;
+  --sidebar-foreground: #f5e9ec;
+  --sidebar-primary: #e8506b;
+  --sidebar-primary-foreground: #2a0e16;
+  --sidebar-accent: #2e1922;
+  --sidebar-accent-foreground: #f5e9ec;
+  --sidebar-border: #3a2430;
+  --sidebar-ring: #e8506b;
 }
 
-/* ───────────────────────────────────────────────────────────────
-   Thèmes typographiques — basculés par le toggle Aa (FontToggle).
-   Chaque thème redéfinit le couple corps (--font-sans) / titres (--font-display).
-   Défaut « editorial » sur :root ; les autres surchargent via [data-typo].
-   ─────────────────────────────────────────────────────────────── */
-/* Corps & titres : familles pilotées par deux variables « actives » posées EN INLINE sur
-   <html> par le toggle (FontToggle) + le script du layout. Sans inline → fallback = thème
-   editorial (Inter / Fraunces). Règles hors @layer → priment sur le preflight Tailwind.
-   NB : on évite les sélecteurs [data-typo] — supprimés par la chaîne Lightning CSS de Next 16. */
+/* Système typo unique : Geist en corps, Instrument Serif en display.
+   Règles hors @layer → priment sur le preflight Tailwind. */
 html {
-  font-family: var(--active-body, var(--font-inter)), system-ui, sans-serif;
+  font-family: var(--font-geist), system-ui, sans-serif;
 }
 .font-display {
-  font-family: var(--active-title, var(--font-fraunces)), Georgia, serif;
+  font-family: var(--font-instrument), Georgia, serif;
+  font-weight: 400; /* Instrument Serif n'a que le 400 — pas de faux-gras */
+  letter-spacing: 0;
 }
 
 @layer base {
@@ -168,11 +159,13 @@ html {
   }
   body {
     @apply bg-background text-foreground;
-    /* Fond vivant : halo lilas en haut (marque) + voile violet ovulation en bas-droite.
+    /* Nuit chaude : braise ember en haut (marque) + or ovulation en bas-droite.
        Fixé pour ne pas défiler avec le contenu — donne de la profondeur sans distraire. */
+    /* --theme-accent : couleur de la phase courante, injectée par CycleApp au fil du jour
+       pointé. Repli sur --primary tant que rien n'est posé → le fond « respire » la phase. */
     background-image:
-      radial-gradient(1100px 560px at 50% -12%, color-mix(in srgb, var(--primary) 13%, transparent), transparent 62%),
-      radial-gradient(820px 480px at 108% 108%, color-mix(in srgb, var(--phase-ovulation) 9%, transparent), transparent 58%);
+      radial-gradient(1100px 560px at 50% -12%, color-mix(in srgb, var(--theme-accent, var(--primary)) 14%, transparent), transparent 62%),
+      radial-gradient(820px 480px at 108% 108%, color-mix(in srgb, var(--phase-ovulation) 8%, transparent), transparent 58%);
     background-attachment: fixed;
   }
   html {

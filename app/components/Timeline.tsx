@@ -26,12 +26,13 @@ import {
 import { REFERENCE_CURVES, CURVE_SERIES } from '@/lib/reference-curves'
 import { getPhaseSpans, wrapCycleDay, CYCLE_REF_LENGTH } from '@/lib/cycle'
 import { PHASE_LABELS } from '@/lib/labels'
-import { ViewToggle, type MainView } from '@/components/ViewToggle'
 import { cn } from '@/lib/utils'
 import type { PhaseId } from '@/lib/types'
 
 const PHASE_SPANS = getPhaseSpans()
 const OVULATION_PEAK_DAY = 13 // jour-événement ponctuel (pic d'ovulation), distinct des bandes-durée
+const BAND_TOP = 116 // haut du domaine Y : au-delà des courbes (max 100) → bandeau libre pour les libellés
+const LABEL_Y = 108 // Y commun des 5 libellés de phase, centré dans le bandeau réservé
 const TICK_DAYS = [1, 5, 12, 15, 21, 27] // jours-de-cycle gradués sur l'axe (fenêtre serrée)
 const TICK_DAYS_SPARSE = [1, 13, 21] // graduations allégées quand la portée est large
 const L = CYCLE_REF_LENGTH
@@ -43,8 +44,6 @@ type ViewMode = 'centered' | 'cycle'
 type TimelineProps = {
   cursorDay: number // jour absolu sous le curseur (hover ou sélection)
   todayDay: number // jour absolu courant
-  view: MainView // pour la bascule Frise/Calendrier dans l'en-tête
-  onViewChange: (v: MainView) => void
   onScrub: (day: number | null) => void
   onSelect: (day: number) => void
 }
@@ -57,7 +56,7 @@ function readVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
 }
 
-export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onSelect }: TimelineProps) {
+export function Timeline({ cursorDay, todayDay, onScrub, onSelect }: TimelineProps) {
   const [mode, setMode] = useState<ViewMode>('centered')
   const [spanDays, setSpanDays] = useState(L) // portée visible en mode centré (un cycle par défaut)
   const [selected, setSelected] = useState<Set<string>>(new Set()) // focus (vide = tout afficher)
@@ -155,105 +154,19 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
   const hasSelection = selected.size > 0
 
   return (
-    <section className="panel">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Frise du cycle
-          </h2>
-          <ViewToggle view={view} onChange={onViewChange} />
-        </div>
-        <div className="flex items-center gap-3">
-          {/* Portée : largeur de fenêtre centrée sur le jour J (mode Centré uniquement) */}
-          {mode === 'centered' && (
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="tabular-nums">
-                Portée {spanDays} j (~{(spanDays / L).toFixed(1)} cycles)
-              </span>
-              <input
-                type="range"
-                min={SPAN_MIN}
-                max={SPAN_MAX}
-                step={1}
-                value={spanDays}
-                onChange={(e) => setSpanDays(Number(e.target.value))}
-                className="h-1.5 w-28 cursor-pointer"
-                style={{ accentColor: col('var(--primary)') }}
-              />
-              {spanDays !== L && (
-                <button
-                  type="button"
-                  onClick={() => setSpanDays(L)}
-                  className="rounded-full border border-border px-2 py-0.5 font-medium transition hover:text-foreground"
-                >
-                  1 cycle
-                </button>
-              )}
-            </div>
-          )}
-          {/* Bascule centrage : jour J au milieu ou cycle 1→27 aligné */}
-          <div className="flex gap-1 rounded-lg bg-secondary p-0.5 text-xs">
-            {(['centered', 'cycle'] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                className={cn(
-                  'rounded-md px-2.5 py-1 font-medium transition',
-                  mode === m ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground',
-                )}
-              >
-                {m === 'centered' ? 'Centré' : 'Cycle'}
-              </button>
-            ))}
-          </div>
-        </div>
+    // Sans fond (comme les stats) : la frise respire directement sur la nuit chaude, px-1
+    // pour aligner son contenu sur celui des stats à sa gauche. flex-col h-full → la zone
+    // graphe s'étire sur toute la hauteur de la colonne stats voisine.
+    <section className="flex h-full flex-col px-1">
+      <div className="mb-4 flex items-center gap-3">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Frise du cycle
+        </h2>
       </div>
 
-      {/* Légende : survol = mise en avant temporaire · clic = focus (cumulable pour comparer).
-          Sans focus, tout est affiché ; « Tout afficher » remet à zéro. */}
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        {CURVE_SERIES.map((s) => {
-          const isSelected = selected.has(s.key)
-          const excluded = hasSelection && !isSelected // hors focus ⇒ non tracée
-          const isHovered = hovered === s.key
-          const dimmed = excluded || (hovered !== null && !isHovered)
-          return (
-            <button
-              key={s.key}
-              type="button"
-              onClick={() => toggleSelect(s.key)}
-              onMouseEnter={() => setHovered(s.key)}
-              onMouseLeave={() => setHovered(null)}
-              className={cn(
-                'flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground transition',
-                dimmed && 'opacity-40',
-                isSelected && 'ring-2 ring-foreground/30',
-              )}
-            >
-              <span
-                className="size-2 rounded-full border"
-                style={{
-                  backgroundColor: excluded ? 'transparent' : col(s.colorVar),
-                  borderColor: col(s.colorVar),
-                }}
-              />
-              {s.label}
-            </button>
-          )
-        })}
-        {hasSelection && (
-          <button
-            type="button"
-            onClick={clearSelection}
-            className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground transition hover:text-foreground"
-          >
-            Tout afficher
-          </button>
-        )}
-      </div>
-
-      <ResponsiveContainer width="100%" height={240}>
+      {/* Zone frise : le graphe occupe toute la hauteur restante (min-h-0 → peut se réduire). */}
+      <div className="relative min-h-0 flex-1">
+      <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={data}
           margin={{ top: 12, right: 8, bottom: 0, left: 8 }}
@@ -265,8 +178,9 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
             if (s?.activeLabel != null) onSelect(Number(s.activeLabel))
           }}
         >
-          {/* Couche 1 — bandes de phases (répétées par cycle), nommées.
-              La bande sous le curseur ressort. */}
+          {/* Couche 1 — bandes de phases (répétées par cycle), couleur seule (sans texte).
+              Les libellés sont posés à la fin, alignés dans le bandeau haut réservé, pour ne
+              jamais chevaucher les courbes. La bande sous le curseur ressort. */}
           {bands.map((b) => {
             const highlighted = b.key === cursorBandKey
             return (
@@ -277,13 +191,6 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
                 fill={col(`var(--phase-${b.phase})`)}
                 fillOpacity={highlighted ? 0.34 : 0.18}
                 stroke="none"
-                label={{
-                  value: PHASE_LABELS[b.phase],
-                  position: 'insideTop',
-                  fontSize: 10,
-                  fontWeight: highlighted ? 700 : 500,
-                  fill: col(`var(--phase-${b.phase})`),
-                }}
               />
             )
           })}
@@ -298,9 +205,12 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
             tickLine={false}
             axisLine={false}
           />
-          <YAxis domain={[0, 100]} hide />
+          {/* Domaine étendu au-delà de 100 : les courbes plafonnent à 100, la tranche 100→116
+              reste libre pour aligner les libellés de phase sans les faire chevaucher les tracés. */}
+          <YAxis domain={[0, BAND_TOP]} hide />
 
-          {/* Jours-événements ponctuels : pic d'ovulation (pastille en haut, distincte des bandes) */}
+          {/* Jour-événement ponctuel : pic d'ovulation (pastille, sans texte — le libellé
+              « Ovulation » est posé avec les autres dans le bandeau haut). */}
           {peaks.map((p) => (
             <ReferenceDot
               key={p.key}
@@ -310,13 +220,6 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
               fill={col('var(--phase-ovulation)')}
               stroke={col('var(--background)')}
               strokeWidth={1.5}
-              label={{
-                value: 'Ovulation',
-                position: 'top',
-                fontSize: 10,
-                fontWeight: 600,
-                fill: col('var(--phase-ovulation)'),
-              }}
             />
           ))}
 
@@ -352,10 +255,127 @@ export function Timeline({ cursorDay, todayDay, view, onViewChange, onScrub, onS
             )
           })}
 
+          {/* Couche 4 — libellés des phases, tous au même Y dans le bandeau haut réservé.
+              Posés en dernier ⇒ au premier plan, jamais masqués par les courbes. Centrés sur
+              chaque bande ; celui sous le curseur ressort. */}
+          {bands.map((b) => {
+            const highlighted = b.key === cursorBandKey
+            return (
+              <ReferenceDot
+                key={`lbl-${b.key}`}
+                x={(b.x1 + b.x2) / 2}
+                y={LABEL_Y}
+                r={0}
+                fill="none"
+                stroke="none"
+                label={{
+                  value: PHASE_LABELS[b.phase],
+                  position: 'center',
+                  fontSize: 10,
+                  fontWeight: highlighted ? 700 : 500,
+                  fill: col(`var(--phase-${b.phase})`),
+                }}
+              />
+            )
+          })}
+
           {/* Tooltip neutralisé : on ne veut que le suivi du jour actif pour le scrub */}
           <Tooltip cursor={false} content={() => null} />
         </ComposedChart>
       </ResponsiveContainer>
+      </div>
+
+      {/* Barre du bas : légende hormones (gauche) + outils portée/centrage (droite), sur une
+          même rangée alignée. Wrap si l'espace manque. */}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        {/* Légende : survol = mise en avant temporaire · clic = focus (cumulable pour comparer).
+            Sans focus, tout est tracé ; « Tout afficher » remet à zéro. */}
+        <div className="flex flex-wrap items-center gap-2">
+          {CURVE_SERIES.map((s) => {
+            const isSelected = selected.has(s.key)
+            const excluded = hasSelection && !isSelected // hors focus ⇒ non tracée
+            const isHovered = hovered === s.key
+            const dimmed = excluded || (hovered !== null && !isHovered)
+            return (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => toggleSelect(s.key)}
+                onMouseEnter={() => setHovered(s.key)}
+                onMouseLeave={() => setHovered(null)}
+                className={cn(
+                  'flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground transition',
+                  dimmed && 'opacity-40',
+                  isSelected && 'ring-2 ring-foreground/30',
+                )}
+              >
+                <span
+                  className="size-2 rounded-full border"
+                  style={{
+                    backgroundColor: excluded ? 'transparent' : col(s.colorVar),
+                    borderColor: col(s.colorVar),
+                  }}
+                />
+                {s.label}
+              </button>
+            )
+          })}
+          {hasSelection && (
+            <button
+              type="button"
+              onClick={clearSelection}
+              className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground transition hover:text-foreground"
+            >
+              Tout afficher
+            </button>
+          )}
+        </div>
+
+        {/* Outils : portée (mode centré seulement) + bascule de centrage. */}
+        <div className="flex items-center gap-3">
+          {mode === 'centered' && (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span className="tabular-nums">
+                Portée {spanDays} j (~{(spanDays / L).toFixed(1)} cycles)
+              </span>
+              <input
+                type="range"
+                min={SPAN_MIN}
+                max={SPAN_MAX}
+                step={1}
+                value={spanDays}
+                onChange={(e) => setSpanDays(Number(e.target.value))}
+                className="h-1.5 w-28 cursor-pointer"
+                style={{ accentColor: col('var(--primary)') }}
+              />
+              {spanDays !== L && (
+                <button
+                  type="button"
+                  onClick={() => setSpanDays(L)}
+                  className="rounded-full border border-border px-2 py-0.5 font-medium transition hover:text-foreground"
+                >
+                  1 cycle
+                </button>
+              )}
+            </div>
+          )}
+          <div className="flex gap-1 rounded-lg bg-secondary p-0.5 text-xs">
+            {(['centered', 'cycle'] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setMode(m)}
+                className={cn(
+                  'rounded-md px-2.5 py-1 font-medium transition',
+                  mode === m ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground',
+                )}
+              >
+                {m === 'centered' ? 'Centré' : 'Cycle'}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

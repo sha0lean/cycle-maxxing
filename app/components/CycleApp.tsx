@@ -6,12 +6,15 @@
 import { useEffect, useState } from 'react'
 import { ensureSeeded, loadDayLogs, saveCycles, saveDayLogs } from '@/lib/storage'
 import { findActiveCycle, startNewCycle, markRulesEnded, upsertDayLog } from '@/lib/cycle-actions'
-import { cycleDayFromDate, findReferenceEntry, wrapCycleDay } from '@/lib/cycle'
+import { cycleDayFromDate, findReferenceEntry, wrapCycleDay, getDayInfo, averageDayLogs } from '@/lib/cycle'
+import { wellbeingScore } from '@/lib/wellbeing'
+import { dayToAvatarState } from '@/lib/avatar'
 import { Frise } from '@/components/Frise'
 import { Calendar } from '@/components/Calendar'
 import { Patterns } from '@/components/Patterns'
 import { Settings } from '@/components/Settings'
 import { CycleNav, type CycleTab } from '@/components/CycleNav'
+import { PHASE_COLOR_VAR } from '@/lib/labels'
 import type { MainView } from '@/components/ViewToggle'
 import type { CycleEntry, DayLog, Metrics } from '@/lib/types'
 
@@ -28,6 +31,17 @@ export function CycleApp() {
     setLogs(loadDayLogs())
   }, [])
 
+  // Thème global adaptatif : la couleur d'accent du fond suit la phase du jour pointé.
+  // On pose --theme-accent sur <html> (repli --primary dans globals.css) → le halo « respire »
+  // la phase. Recalcul inline (hook appelé inconditionnellement, avant l'early return).
+  useEffect(() => {
+    if (!cycles) return
+    const active = findActiveCycle(cycles) ?? cycles[cycles.length - 1]
+    const navDay = tab === 'patterns' ? wrapCycleDay(cycleDayFromDate(active.j1)) : displayDay
+    const phase = findReferenceEntry(navDay).phase
+    document.documentElement.style.setProperty('--theme-accent', PHASE_COLOR_VAR[phase])
+  }, [cycles, tab, displayDay])
+
   if (!cycles) {
     return <div className="p-8 text-sm text-muted-foreground">Chargement…</div>
   }
@@ -38,6 +52,10 @@ export function CycleApp() {
   // La navbar suit le jour pointé en vue Cycle ; en Patterns, elle retombe sur aujourd'hui.
   const navDay = tab === 'patterns' ? wrapCycleDay(todayDay) : displayDay
   const navEntry = findReferenceEntry(navDay)
+
+  // Score « Forme » du jour pointé, pour le badge de la navbar (sorti de la fiche avatar).
+  const navForme = wellbeingScore(getDayInfo(navDay, averageDayLogs(logs, navDay)).displayMetrics)
+  const navFormeEmoji = dayToAvatarState(navDay).emoji
 
   // Mutations : on persiste explicitement après chaque action (pas d'effet → pas de save au montage).
   const handleStartNewCycle = () => {
@@ -67,7 +85,16 @@ export function CycleApp() {
 
   return (
     <div className="mx-auto w-full max-w-[1800px] space-y-6 p-6">
-      <CycleNav dayNumber={navDay} entry={navEntry} tab={tab} onTabChange={setTab} />
+      <CycleNav
+        dayNumber={navDay}
+        entry={navEntry}
+        tab={tab}
+        onTabChange={setTab}
+        mainView={mainView}
+        onMainViewChange={setMainView}
+        forme={navForme}
+        formeEmoji={navFormeEmoji}
+      />
 
       {tab === 'patterns' ? (
         <Patterns activeCycle={active} todayDay={todayDay} logs={logs} />
@@ -75,8 +102,6 @@ export function CycleApp() {
         <Frise
           logs={logs}
           todayDay={todayDay}
-          view={mainView}
-          onViewChange={setMainView}
           onDayChange={setDisplayDay}
           onSaveMetrics={handleSaveMetrics}
         />
@@ -85,8 +110,6 @@ export function CycleApp() {
           cycles={cycles}
           todayDay={todayDay}
           logs={logs}
-          view={mainView}
-          onViewChange={setMainView}
           onDayChange={setDisplayDay}
           onSaveMetrics={handleSaveMetrics}
         />

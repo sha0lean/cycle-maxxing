@@ -35,9 +35,10 @@ export function MetricsPanel({ display, reference, hasPersonal, onSaveMetrics }:
   const setMetric = (key: MetricKey, value: number) => setDraft((d) => ({ ...d, [key]: value }))
 
   return (
-    <section className="panel">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+    // « Sans fond » : pas de carte, les jauges respirent directement sur la nuit chaude.
+    <section className="px-1">
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
           Stats du jour
         </h2>
         {editing ? (
@@ -68,14 +69,14 @@ export function MetricsPanel({ display, reference, hasPersonal, onSaveMetrics }:
         )}
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid gap-2">
         {METRIC_KEYS.map((key) => {
           const value = editing ? draft[key] ?? display[key] : display[key]
           const ref = reference[key]
           const color = METRIC_COLOR[key]
           const showMarker = !editing && hasPersonal && value !== ref
           return (
-            <div key={key} className="space-y-1.5">
+            <div key={key} className="space-y-1">
               <div className="flex items-baseline justify-between">
                 <span className="text-sm font-medium text-foreground">{METRIC_LABELS[key]}</span>
                 <span

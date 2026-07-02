@@ -36,16 +36,17 @@ export const PHASE_COLOR_VAR: Record<PhaseId, string> = {
   spm: 'var(--phase-spm)',
 }
 
-// Couleur propre à chaque jauge des « Stats du jour » — teintes distinctes pour lecture rapide.
+// Couleur propre à chaque jauge — distinctes pour lecture rapide, mais réchauffées/adoucies
+// pour cohabiter sur la nuit chaude (plus d'indigo ni de violet électrique).
 export const METRIC_COLOR: Record<MetricKey, string> = {
-  energie: '#f59e0b', // ambre
-  humeur: '#ec4899', // rose
-  libido: '#e11d48', // rouge-rose
-  fatigue: '#6366f1', // indigo
-  sensibilite: '#14b8a6', // teal
-  stress: '#f97316', // orange
-  douleurs: '#ef4444', // rouge
-  irritabilite: '#a855f7', // violet
+  energie: '#f2b03a', // or-ambre
+  humeur: '#ec7fa0', // rose doux
+  libido: '#e8506b', // groseille (ember)
+  fatigue: '#8b7cc0', // mauve-indigo adouci
+  sensibilite: '#3db0a2', // teal adouci (écho du folliculaire)
+  stress: '#f0803a', // orange
+  douleurs: '#dc5560', // braise
+  irritabilite: '#c169a8', // magenta-prune
 }
 
 export const URGENCE_COLOR_VAR: Record<UrgenceLevel, string> = {

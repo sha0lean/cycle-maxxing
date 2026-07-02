@@ -4,11 +4,35 @@
 // Présentation pure : la résolution jour → entrée est faite en amont par domain-loader.
 
 import { useState } from 'react'
+import {
+  Users,
+  MessageCircle,
+  Heart,
+  Brain,
+  Apple,
+  HeartPulse,
+  Moon,
+  Dumbbell,
+  Sparkles,
+  type LucideIcon,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { ResolvedDomain } from '@/lib/domain-loader'
 
 type DomainTabsProps = {
   domains: ResolvedDomain[]
+}
+
+// Icône par domaine (id → glyphe lucide). Repli Sparkles si un id inconnu apparaît.
+const DOMAIN_ICON: Record<string, LucideIcon> = {
+  activites: Users,
+  communication: MessageCircle,
+  intimite: Heart,
+  mental: Brain,
+  nutrition: Apple,
+  sante: HeartPulse,
+  sommeil: Moon,
+  sport: Dumbbell,
 }
 
 export function DomainTabs({ domains }: DomainTabsProps) {
@@ -29,18 +53,16 @@ export function DomainTabs({ domains }: DomainTabsProps) {
   const tabFill = 'color-mix(in srgb, var(--primary) 28%, var(--card))'
 
   return (
-    <section className="flex h-full flex-col animate-in fade-in slide-in-from-bottom-2 duration-500">
-      <h2 className="mb-2 px-1 font-display text-2xl font-semibold tracking-tight text-foreground">
-        Conseils du jour
-      </h2>
-
-      {/* flex-1 + flex-col → le dossier remplit la hauteur de la colonne (descend jusqu'en bas). */}
-      <div className="relative flex flex-1 flex-col">
-        {/* Rangée d'onglets : dépassent du haut (-mb-4 → corps recouvre leur base). justify-between
-            + sans inset → 1er onglet collé au bord gauche du dossier, dernier au bord droit. */}
-        <div className="flex items-end justify-between gap-1.5 overflow-x-auto overflow-y-hidden pt-1 -mb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    // Bloc pur onglets + corps (le titre et la pilule Conseil/Hormones vivent dans DayPanel).
+    // flex-col → onglets puis corps. Le corps porte une hauteur fixe (anti-saut, cf. plus bas).
+    <div className="relative flex flex-col">
+        {/* Rangée d'onglets : dépassent du haut (-mb-4 → corps recouvre leur base). justify-start
+            + gap → chaque onglet prend sa largeur naturelle (icône + label), collés à gauche,
+            plus d'étirement forcé sur toute la largeur. Scroll horizontal si ça déborde. */}
+        <div className="flex items-end justify-start gap-1.5 overflow-x-auto overflow-y-hidden pt-1 -mb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {domains.map((d) => {
             const isActive = d.id === current.id
+            const Icon = DOMAIN_ICON[d.id] ?? Sparkles
             return (
               <button
                 key={d.id}
@@ -53,7 +75,7 @@ export function DomainTabs({ domains }: DomainTabsProps) {
                   // transform-gpu + origin-bottom : le lift/press pivote depuis la base (ancrage dossier).
                   // active:scale → feedback de press au clic. ease-out duration-200 → départ vif, fin douce.
                   // motion-reduce : on neutralise translate/scale pour respecter prefers-reduced-motion.
-                  'relative transform-gpu origin-bottom whitespace-nowrap rounded-t-2xl px-4 pt-3 pb-7 text-sm font-medium transition-all duration-200 ease-out active:scale-[0.96] motion-reduce:transition-none motion-reduce:transform-none',
+                  'relative flex items-center gap-1.5 transform-gpu origin-bottom whitespace-nowrap rounded-t-2xl px-4 pt-3 pb-7 text-sm font-medium transition-all duration-200 ease-out active:scale-[0.96] motion-reduce:transition-none motion-reduce:transform-none',
                   isActive
                     ? 'text-foreground' // même teinte que le corps → fusion
                     // Inactifs : texte plus discret, et au survol l'onglet se soulève (-translate-y-1),
@@ -61,6 +83,7 @@ export function DomainTabs({ domains }: DomainTabsProps) {
                     : 'text-foreground/55 hover:-translate-y-1 hover:text-foreground hover:brightness-110 hover:shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)]',
                 )}
               >
+                <Icon className="size-4 shrink-0" aria-hidden />
                 {d.label}
               </button>
             )
@@ -68,10 +91,11 @@ export function DomainTabs({ domains }: DomainTabsProps) {
         </div>
 
         {/* Corps du dossier : grande carte pleine, même teinte que l'onglet actif → raccord
-            invisible. Tous coins arrondis (dossier doux), ombre portée douce. */}
+            invisible. Hauteur FIXE en desktop (lg:h-80) + scroll interne → le dossier ne change
+            plus de taille selon le contenu du domaine → la colonne Julie ne saute plus. */}
         <div
           style={{ backgroundColor: folderFill }}
-          className="relative flex-1 rounded-3xl p-5 shadow-[0_22px_50px_-26px_rgb(0_0_0/0.7)]"
+          className="relative rounded-3xl p-5 shadow-[0_22px_50px_-26px_rgb(0_0_0/0.7)] lg:h-80 lg:overflow-y-auto"
         >
           {/* key par domaine → le contenu fond en entrée à chaque changement d'onglet. */}
           <div key={current.id} className="animate-in fade-in slide-in-from-bottom-1 duration-300">
@@ -99,7 +123,6 @@ export function DomainTabs({ domains }: DomainTabsProps) {
           </div>
         </div>
       </div>
-    </section>
   )
 }
 
